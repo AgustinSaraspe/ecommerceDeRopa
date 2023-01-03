@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize");
+const Sequelize = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const {
@@ -9,14 +9,12 @@ const {
   dbPort,
 } = require("./utils/config");
 
-
 // Defino los parametros de conexión con la base de datos mediante una instancia de Sequelize
-let sequelize =
-  new Sequelize(
-    `postgres://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`,
-    { logging: false, native: false }
-  );
-  
+let sequelize = new Sequelize(
+  `postgres://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`,
+  { logging: false, native: false }
+);
+
 // Pruebo si la conexión está bien.
 (async () => {
   try {
@@ -57,9 +55,7 @@ const { Product } = sequelize.models;
 
 //Relaciones
 
-
 module.exports = {
-    ...sequelize.models,
-    conn: sequelize,
-  };
-  
+  ...sequelize.models,
+  conn: sequelize,
+};
