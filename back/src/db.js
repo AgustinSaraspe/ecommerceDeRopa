@@ -51,7 +51,7 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 // Extraigo cada modelo.
-const { Product } = sequelize.models;
+const { Product, User } = sequelize.models;
 
 //Relaciones
 
