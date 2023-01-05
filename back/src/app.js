@@ -7,7 +7,7 @@ const errorHandler = require("./utils/middlewares/errorHandler.js");
 
 const app = express();
 app.name = "API";
- 
+
 // Middlewares
 app.use(cookieParser()); // Manejo de cookies.
 app.use(express.urlencoded({ extended: true, limit: "50mb" })); // Analiza solicitudes con cabecera "application/x-www-form-urlencoded" parseando el contenido del req.body con este tipo de contenido especificado a codigo JS.
