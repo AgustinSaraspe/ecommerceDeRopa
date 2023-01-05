@@ -9,14 +9,14 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      nombre: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       price: {
         type: DataTypes.DECIMAL,
         allowNull: false,
-        defaultValue: "0,00",
+        defaultValue: 0.0,
       },
       stock: {
         type: DataTypes.INTEGER,
