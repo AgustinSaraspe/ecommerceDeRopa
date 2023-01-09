@@ -75,6 +75,7 @@ const updateProduct = async (body, id) => {
   }
 };
 
+//Elimina un producto
 const deleteProduct = async (id) => {
   try {
     let deleted = await Product.destroy({
@@ -82,6 +83,7 @@ const deleteProduct = async (id) => {
         id,
       },
     });
+    if (!deleted) throw new Error("No se encontró el producto");
     return deleted;
   } catch (error) {
     throw new Error(error);
