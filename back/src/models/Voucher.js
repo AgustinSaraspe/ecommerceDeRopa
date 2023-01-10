@@ -4,9 +4,10 @@ const {DataTypes} = require("sequelize");
 module.exports = (sequelize) =>{
   sequelize.define("Voucher", {
     date:{
-        type: DataTypes.STRING,
+      type: DataTypes.DATEONLY,
+      defaultValue: DataTypes.NOW    
     },
-   wayToPay: {
+    wayToPay: {
      type: DataTypes.STRING
     }, 
     price: {
