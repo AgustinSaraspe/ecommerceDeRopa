@@ -6,7 +6,7 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
-} = require("../controllers/products.controllers.js");
+} = require("../controllers/productControllers.js");
 
 productRouter.get("/", async (req, res, next) => {
   try {

@@ -1,0 +1,42 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.container{
+
+}
+
+.navbar{
+  display: flex;
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 1rem;
+  font-family: verdana;
+  font-weight: 700;
+  border-bottom: 1px solid #DDD;
+}
+
+.navbar a{
+  text-decoration: none;
+  color: white;
+}
+
+.nav-left{
+  flex: 2;
+  margin: auto 1rem;
+}
+
+.nav-right{
+  flex: 1;
+  display: flex;
+  justify-content: end;
+  justify-content: space-around;
+}
+
+.body{
+  display: flex;
+  flex-direction: column;
+  background-color: grey;
+}
