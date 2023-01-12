@@ -1,23 +1,35 @@
-const {Voucher} = require("../db.js");
+const {Voucher, User, Cart} = require("../db.js");
 
 
 const getVoucher = async (idUser) =>{
-    if(!idUser) throw new Error("el id usuario es requerido");
-    const result = await Voucher.findAll({where:{
-        idUser: idUser
-    }});
-    return result;
+    try{
+        if(!idUser) throw new Error("el id usuario es requerido");
+        let userVoucher = await Voucher.findAll({where:{
+            UserId: idUser
+        }});
+        console.log(userVoucher)
+        return userVoucher;
+    }catch(error){
+        throw new Error(error);
+    }
 };
 
-const postVoucher = async (wayToPay, price) =>{
+const postVoucher = async (wayToPay, price,idUser,idCart) =>{
    if(!wayToPay || !price) throw new Error("Falta un argumento");
    if(isNaN(price)) throw new Error("El precio no es numero");
 
+   //relacion 
+   const userVoucher = await User.findByPk(idUser);     
+   if(!userVoucher) throw new Error("user no encontrado");
+
    const result = await Voucher.create({
     wayToPay,
-    price
+    price,
+    CartId: idCart
    });
-   //relacion pendiente
+    
+   userVoucher.addVoucher(result);
+
    return result;
 };
 
@@ -25,6 +37,7 @@ const postVoucher = async (wayToPay, price) =>{
 const getAllVouchers = async () =>{
    const result = await Voucher.findAll();
    if(!result) throw new Error("No se encontraron comprobantes");
+   console.log(result)
    return result;
 };
 

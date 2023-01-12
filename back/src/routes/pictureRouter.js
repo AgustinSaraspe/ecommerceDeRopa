@@ -6,8 +6,8 @@ const pictureRouter = Router();
 
 pictureRouter.post("/", async (req, res, next)=>{
     try{
-       const {url} = req.body;
-       const result = await postPicture(url);
+       const {url, productId} = req.body;
+       const result = await postPicture(url,productId);
        res.status(200).json(result);
     }catch(error){
         next(error);
@@ -24,7 +24,7 @@ pictureRouter.get("/:id", async (req, res, next)=>{
     }
 });
 
-pictureRouter.get("/pictureProduct/:idProduct", async (res, req, next)=>{
+pictureRouter.get("/pictureProduct/:idProduct", async (req, res, next)=>{
    try{
      const {idProduct} = req.params;
      const result = await getPictureProduct(idProduct);

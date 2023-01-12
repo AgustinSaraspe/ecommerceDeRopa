@@ -30,8 +30,8 @@ cartRouter.get("/:id", async (req, res, next) => {
 
 cartRouter.post("/", async (req, res, next) => {
   try {
-    const { state, date } = req.body;
-    const result = await createCart(state, date);
+    const { idUser,totalPrice } = req.body;
+    const result = await createCart(idUser,totalPrice);
     res.status(201).json(result);
   } catch (error) {
     next(error);
