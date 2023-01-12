@@ -3,40 +3,101 @@
   margin: 0;
 }
 
-.container{
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@500;700&family=Nunito:wght@300;400;600;900&family=Staatliches&display=swap');
 
+.container{
+  
 }
 
 .navbar{
   display: flex;
   width: 100%;
-  background-color: black;
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  background-color: #2e2e2e;
   color: white;
-  padding: 1rem;
-  font-family: verdana;
+  padding: 1.5rem;
   font-weight: 700;
-  border-bottom: 1px solid #DDD;
+  border-bottom: 1px solid #9b9b9b;
 }
 
 .navbar a{
   text-decoration: none;
   color: white;
+  align-self: center;
 }
 
 .nav-left{
-  flex: 2;
+  flex: 1;
   margin: auto 1rem;
+  font-size: 24px;
+  font-weight: 900;
 }
 
 .nav-right{
   flex: 1;
+  font-weight: 600;
   display: flex;
   justify-content: end;
-  justify-content: space-around;
+  margin-right: 1rem;
+}
+
+.nav-right a{
+  margin: 0 2rem;
+  transition: 0.3s;
+}
+
+.nav-right a:hover{
+  text-decoration-line: underline;
+  text-decoration-color: white;
+  letter-spacing: 1px;
 }
 
 .body{
   display: flex;
   flex-direction: column;
-  background-color: grey;
+  height: 100%;
+}
+
+.log-button{
+  background-color: rgb(65, 144, 255);
+  padding: 5px 1rem;
+  border-radius: 5px;
+  border: 0;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+footer{
+  display: flex;
+  background-color: #2e2e2e;
+  color: white;
+  height: 150px;
+  width: 100%;
+  text-align: center;
+  font-family: "Nunito";
+  border-top: 1px solid #9b9b9b;
+}
+
+footer div{
+  flex: 1;
+  justify-content: center;
+  align-self: center;
+}
+
+footer div i{
+  font-size: 24px;
+  margin: 0.3rem 1rem;
+  cursor: pointer;
+}
+
+.footer-devs{
+  color: #CECECE;
+  align-self: flex-end;
+}
+
+.footer-devs i{
+  font-size: 20px;
 }
