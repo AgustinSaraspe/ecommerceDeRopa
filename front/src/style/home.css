@@ -1,0 +1,32 @@
+.home-body{
+  display: flex;
+  flex-direction: column;
+}
+
+.home-hero{
+  height: 400px;
+}
+
+.hero-img{
+  width: 100%;
+  height: 100%;
+}
+
+.home-options{
+  margin: 0;
+  font-size: 40px;
+  padding: 2rem;
+  letter-spacing: 6px;
+  font-family: "Staatliches";
+  background-color: #dedede;
+  color: black;
+  border: 1px solid #777777;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.home-options:hover{
+  background-color: #1f1f1f;
+  color: white;
+  letter-spacing: 10px;
+}
