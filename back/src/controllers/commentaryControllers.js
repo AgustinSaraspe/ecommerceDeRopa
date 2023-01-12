@@ -1,9 +1,14 @@
-const { Commentary } = require("../db.js");
+const { Commentary, User, Product } = require("../db.js");
 
-const getAllCommentaries = async () => {
+const getAllCommentaries = async (productId) => {
   try {
-    let allCommentaries = await Commentary.findAll();
-    return allCommentaries.map((e) => valuesToReturn(e.toJSON()));
+    if(!productId) throw new Error('El id producto es necesario');
+
+    let allCommentaries = await Commentary.findAll({where:{
+      ProductId: productId
+    }});
+
+    return allCommentaries;
   } catch (error) {
     throw new Error(error);
   }
@@ -20,11 +25,26 @@ const getOneCommentary = async (id) => {
   }
 };
 
-const createCommentary = async (message) => {
+const createCommentary = async (message, idUser, idProduct) => {
   try {
+
+    if(!message) throw new Error("El mensaje no puede estar vacio");
+    //relaciones
+    const userCommertary = await User.findByPk(idUser);
+    if(!userCommertary) throw new Error("user no encontrado");
+    
+    const productCommertary = await Product.findByPk(idProduct);
+    if(!productCommertary) throw new Error("product no encontrado");
+
     let newCommentary = await Commentary.create({
       message,
     });
+    
+    //relaciones
+    userCommertary.addCommentary(newCommentary);
+    productCommertary.addCommentary(newCommentary);
+
+
     return newCommentary;
   } catch (error) {
     throw new Error(error);

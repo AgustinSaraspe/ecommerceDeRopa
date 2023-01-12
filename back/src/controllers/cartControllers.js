@@ -3,42 +3,33 @@ const { Cart } = require("../db.js");
 //Trae todos los carritos
 const getAllCarts = async () => {
   try {
-    let allCarts = await Cart.findAll({
-      //
-    });
-    return allCarts.map((e) => valuesToReturn(e.toJSON()));
+    let allCarts = await Cart.findAll();
+    return allCarts;
   } catch (error) {
     throw new Error(error);
   }
 };
 
-//Trae carrito por id
-const getOneCart = async (id) => {
+//Trae todos los carritos de un usuario
+const getOneCart = async (idUser) => {
   try {
-    let cart = await Cart.findByPk(id, {
-      //
-    });
-    if (!cart) throw new Error(`No se encontró carrito con id: ${id}`);
-    return valuesToReturn(cart);
+    let cart = await Cart.findAll({where:{
+      UserId: idUser
+    }});
+    return cart;
   } catch (error) {
     throw new Error(error);
   }
 };
 
 //Crea un nuevo carrito
-const createCart = async (state, date) => {
+const createCart = async (idUser,totalPrice) => {
   try {
-    if (!state || !date) throw new Error("Falta un argumento");
-    const resultado = await Cart.findOne({
-      where: {
-        //
-      },
-    });
-    if (resultado) throw new Error("El carrito ya existe");
-
+    if (!totalPrice || !idUser) throw new Error("Falta un argumento");
+    
     let cart = await Cart.create({
-      state,
-      date,
+      UserId: idUser,
+      totalPrice
     });
     return cart;
   } catch (error) {
@@ -86,11 +77,4 @@ module.exports = {
   deleteCart,
 };
 
-const valuesToReturn = (value) => {
-  return {
-    id: value.id,
-    state: value.state,
-    date: value.date,
-    // category: value.Categories.map(el=>el.name),
-  };
-};
+
