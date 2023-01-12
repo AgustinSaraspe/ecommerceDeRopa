@@ -8,9 +8,10 @@ const {
   deleteCommentary,
 } = require("../controllers/commentaryControllers.js");
 
-commentaryRouter.get("/", async (req, res, next) => {
+commentaryRouter.get("/all/:productId", async (req, res, next) => {
   try {
-    const commentaries = await getAllCommentaries();
+    const {productId} = req.params;
+    const commentaries = await getAllCommentaries(productId);
 
     res.status(201).json(commentaries);
   } catch (error) {
@@ -30,8 +31,8 @@ commentaryRouter.get("/:id", async (req, res, next) => {
 
 commentaryRouter.post("/", async (req, res, next) => {
   try {
-    const { message } = req.body;
-    const result = await createCommentary(message);
+    const { message, idUser, idProduct } = req.body;
+    const result = await createCommentary(message,idUser, idProduct);
     res.status(201).json(result);
   } catch (error) {
     next(error);

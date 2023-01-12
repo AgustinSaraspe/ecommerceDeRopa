@@ -1,10 +1,10 @@
-const { Product } = require("../db.js");
+const { Product, Category } = require("../db.js");
 
 //Trae todos los productos
 const getAllProducts = async () => {
   try {
     let allProducts = await Product.findAll({
-      // include: { model: Category},
+      include: { model: Category}
     });
     return allProducts.map((el) => valuesToReturn(el.toJSON()));
   } catch (error) {
@@ -16,7 +16,7 @@ const getAllProducts = async () => {
 const getOneProduct = async (id) => {
   try {
     let product = await Product.findByPk(id, {
-      // include : {model : Category},
+       include : {model : Category}
     });
     if (!product) throw new Error(`No se encontró el producto con id: ${id}`);
     return valuesToReturn(product);
@@ -26,7 +26,7 @@ const getOneProduct = async (id) => {
 };
 
 //Crea un nuevo producto
-const createProduct = async (name, price, stock, state, description) => {
+const createProduct = async (name, price, stock, state, description,category) => {
   try {
     //Comprobamos que todos los argumentos esten definidos.
     // if (!name || !price || !stock || !state || !description)
@@ -52,6 +52,14 @@ const createProduct = async (name, price, stock, state, description) => {
       state,
       description,
     });
+
+    let categoryProduct = await Category.findAll({
+      where:{
+         name: category
+      }
+    });
+    nuevoProducto.addCategory(categoryProduct);
+
     return nuevoProducto;
   } catch (error) {
     throw new Error(error);
@@ -106,6 +114,6 @@ const valuesToReturn = (value) => {
     price: value.price,
     state: value.state,
     stock: value.stock,
-    // category: value.Categories.map(el=>el.name),
+    category: value.Categories.map(el=>el.name),
   };
 };
