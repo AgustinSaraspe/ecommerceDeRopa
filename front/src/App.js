@@ -27,22 +27,12 @@ function App() {
             <Link to="/about">Contacto</Link>
             {logged ? (
               <>
-                <button
-                  className="log-button"
-                  onClick={() => {
-                    setLogged(!logged);
-                  }}
-                >
+                <Link to="/login" className="log-button">
                   Login
-                </button>
-                <button
-                  className="log-button"
-                  onClick={() => {
-                    setLogged(!logged);
-                  }}
-                >
+                </Link>
+                <Link to="/signup" className="log-button">
                   Sign Up
-                </button>
+                </Link>
               </>
             ) : (
               <>

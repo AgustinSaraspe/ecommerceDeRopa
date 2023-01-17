@@ -179,15 +179,15 @@
 .log-button{
   display: block;
   background-color: transparent;
-  padding: 0 1rem;
   color: white;
   cursor: pointer;
   border: none;
   border-bottom: 3px solid salmon;
   font-weight: bold;
-  margin: 0 3px;
   cursor: pointer;
   transition: 0.3s;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
 }
 
 .log-button:hover{
