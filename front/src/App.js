@@ -12,6 +12,7 @@ import About from "./pages/About";
 
 function App() {
   const [logged, setLogged] = useState(false);
+  const [admin, setAdmin] = useState(false);
 
   return (
     <Router>
@@ -21,33 +22,48 @@ function App() {
             <Link to="/">Colibri</Link>
           </div>
           <div className="nav-right">
-            <Link to="/">Home</Link>
-            <Link to="/store">Store</Link>
-            <Link to="/about">About</Link>
-            <Link to="/cart">
-              <i className="fa-solid fa-cart-shopping"></i>
-            </Link>
-            <a>
-              <i className="fa-solid fa-user"></i>
-            </a>
+            <Link to="/">Inicio</Link>
+            <Link to="/store">Productos</Link>
+            <Link to="/about">Contacto</Link>
             {logged ? (
-              <button
-                className="log-button"
-                onClick={() => {
-                  setLogged(!logged);
-                }}
-              >
-                Login
-              </button>
+              <>
+                <Link to="/login" className="log-button">
+                  Login
+                </Link>
+                <Link to="/signup" className="log-button">
+                  Sign Up
+                </Link>
+              </>
             ) : (
-              <button
-                className="log-button"
-                onClick={() => {
-                  setLogged(!logged);
-                }}
-              >
-                Sign Up
-              </button>
+              <>
+                <div className="dropdown-cart">
+                  <Link to="/cart" className="cart-btn">
+                    <i className="fa-solid fa-cart-shopping"></i>
+                  </Link>
+                  <div className="dropdown-cart-content">
+                    <button>Comprar</button>
+                    {/* Renderizamos los productos del carrito */}
+                    <button>Cancelar compra</button>
+                  </div>
+                </div>
+                <div className="dropdown-user">
+                  <i className="fa-solid fa-user" id="drop-user-btn"></i>
+                  <div className="dropdown-content">
+                    {admin ? (
+                      <button>Cargar un producto</button>
+                    ) : (
+                      <button>Mi perfil</button>
+                    )}
+                    <button
+                      onClick={() => {
+                        setLogged(!logged);
+                      }}
+                    >
+                      Cerrar Sesión
+                    </button>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         </nav>
@@ -71,9 +87,15 @@ function App() {
             <i className="fa-brands fa-linkedin"></i>
           </div>
           <div className="footer-header">
-            <h2>Colibri</h2>
-            <i className="fa-brands fa-instagram"></i>
-            <i className="fa-brands fa-whatsapp"></i>
+            <div>
+              <h2>Colibri</h2>
+            </div>
+            <div>
+              <i className="fa-brands fa-instagram"></i>
+              <h5>@colibrisublimados</h5>
+              <i className="fa-brands fa-whatsapp"></i>
+              <h5>+54 3863 123456</h5>
+            </div>
           </div>
           <div className="footer-devs">
             <h5>Agustin Saraspe</h5>
