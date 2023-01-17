@@ -14,6 +14,12 @@ function App() {
   const [logged, setLogged] = useState(false);
   const [admin, setAdmin] = useState(false);
 
+
+  const handleLogout = ()=> {
+    setLogged(!logged);
+    localStorage.removeItem("jwt")
+  };
+
   return (
     <Router>
       <div className="container">
@@ -56,7 +62,7 @@ function App() {
                     )}
                     <button
                       onClick={() => {
-                        setLogged(!logged);
+                        handleLogout();
                       }}
                     >
                       Cerrar Sesión
