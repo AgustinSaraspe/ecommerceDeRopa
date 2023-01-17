@@ -1,9 +1,16 @@
 const {User} = require("../db.js");
-
+const jwt = require('jsonwebtoken');
+const bcrypt = require("bcrypt");
 
 //POST
 const postUser = async (name, email,state,admin,password,address,phone)=>{
     try{
+
+       let newPassword = bcrypt.hashSync(password, 10);
+
+       console.log(newPassword);
+
+
         const [result, created] = await User.findOrCreate({
           where:{
             email: email
@@ -13,12 +20,20 @@ const postUser = async (name, email,state,admin,password,address,phone)=>{
             email,
             state,
             admin,
-            password,
+            password: newPassword,
             address,
             phone
           }
         });
-        return result;
+          
+        let token = jwt.sign({user:result}, "secret_word", {
+          expiresIn: "24h"
+        });
+
+        return {
+          user: result,
+          token: token
+        };
     } catch(err){
         throw new Error(err);
     }
