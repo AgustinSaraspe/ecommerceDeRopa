@@ -1,4 +1,3 @@
-import { Box, IconButton, InputAdornment, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 
@@ -18,9 +17,11 @@ function Login() {
     Number.parseInt(input.phone);
     console.log(input)
     let resultado = await axios.post("http://localhost:3001/users", input)
-    localStorage.setItem("jwt", resultado.data.token);
     if(resultado.data.token){
+      localStorage.setItem("jwt", resultado.data.token);
       window.location.replace("http://localhost:3000/");
+    }else{
+      alert("El registro fallo");
     }
   };
 
