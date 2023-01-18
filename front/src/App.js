@@ -9,17 +9,18 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
 import About from "./pages/About";
-import SignIn from "./pages/SignIn";
 
 function App() {
   const [logged, setLogged] = useState(false);
   const [admin, setAdmin] = useState(false);
+  console.log(logged);
 
-
-  const handleLogout = ()=> {
-    setLogged(!logged);
-    localStorage.removeItem("jwt")
+  const handleLogout = () => {
+    setLogged(false);
+    localStorage.removeItem("jwt");
   };
+
+  useEffect(() => {}, [logged]);
 
   return (
     <Router>
@@ -34,12 +35,12 @@ function App() {
             <Link to="/about">Contacto</Link>
             {logged ? (
               <>
-                <Link to="/login" className="log-button">
-                  Login
-                </Link>
-                <Link to="/signup" className="log-button">
-                  Sign Up
-                </Link>
+                <button className="log-button">
+                  <Link to="/login">Login</Link>
+                </button>
+                <button className="log-button">
+                  <Link to="/signup">Sign Up</Link>
+                </button>
               </>
             ) : (
               <>
@@ -78,9 +79,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/store" element={<Store />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signin" element={<SignIn />} />
+            <Route path="/login" element={<Login log={setLogged} />} />
+            <Route path="/signup" element={<Signup log={setLogged} />} />
             <Route path="/products" element={<Products />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/about" element={<About />} />
