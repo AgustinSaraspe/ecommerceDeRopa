@@ -14,10 +14,9 @@ function App() {
   const [logged, setLogged] = useState(false);
   const [admin, setAdmin] = useState(false);
 
-
-  const handleLogout = ()=> {
+  const handleLogout = () => {
     setLogged(!logged);
-    localStorage.removeItem("jwt")
+    localStorage.removeItem("jwt");
   };
 
   return (
@@ -33,12 +32,12 @@ function App() {
             <Link to="/about">Contacto</Link>
             {logged ? (
               <>
-                <Link to="/login" className="log-button">
-                  Login
-                </Link>
-                <Link to="/signup" className="log-button">
-                  Sign Up
-                </Link>
+                <button className="log-button">
+                  <Link to="/login">Login</Link>
+                </button>
+                <button className="log-button">
+                  <Link to="/signup">Sign Up</Link>
+                </button>
               </>
             ) : (
               <>
