@@ -1,10 +1,3 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField,
-} from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import "../style/signup.css";
@@ -18,11 +11,13 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     Number.parseInt(input.phone);
-    console.log(input);
-    let resultado = await axios.post("http://localhost:3001/users", input);
-    localStorage.setItem("jwt", resultado.data.token);
-    if (resultado.data.token) {
+    console.log(input)
+    let resultado = await axios.post("http://localhost:3001/users", input)
+    if(resultado.data.token){
+      localStorage.setItem("jwt", resultado.data.token);
       window.location.replace("http://localhost:3000/");
+    }else{
+      alert("El registro fallo");
     }
   };
 
@@ -37,10 +32,9 @@ function Login() {
 
   return (
     <div>
-      <Box
-        component="form"
+      <div
         className="signup-form"
-        sx={{
+        style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -82,7 +76,7 @@ function Login() {
           No estás registrado?{" "}
           <a href="http://localhost:3000/signup">Registrarse</a>
         </p>
-      </Box>
+      </div>
     </div>
   );
 }
