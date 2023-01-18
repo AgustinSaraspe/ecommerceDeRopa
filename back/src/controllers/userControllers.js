@@ -8,9 +8,6 @@ const postUser = async (name, email,state,admin,password,address,phone)=>{
 
        let newPassword = bcrypt.hashSync(password, 10);
 
-       console.log(newPassword);
-
-
         const [result, created] = await User.findOrCreate({
           where:{
             email: email
@@ -38,6 +35,30 @@ const postUser = async (name, email,state,admin,password,address,phone)=>{
         throw new Error(err);
     }
 
+};
+
+
+const singIn = async (email, password) =>{
+   const result = await User.findOne({
+    where:{
+      email: email
+    }
+   });
+   
+   if(!result) throw new Error("El usuario no existe");
+    
+   if(bcrypt.compareSync(password, result.password)){
+      let token = jwt.sign({ user : result }, "secret_word",{
+      expiresIn: "24h"
+      });
+      
+      return {
+       user: result,
+       token: token
+      };
+   }else{
+    throw new Error("Contraseña incorrecta");
+   }
 };
 
 
@@ -85,5 +106,6 @@ module.exports = {
   getAllUsers,
   postUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  singIn
 };

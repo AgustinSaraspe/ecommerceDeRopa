@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const {postUser, getUser, getAllUsers,updateUser,deleteUser} = require("../controllers/userControllers.js");
+const {postUser, getUser, getAllUsers,updateUser,deleteUser,singIn} = require("../controllers/userControllers.js");
 
 const userRouter = Router();
 
@@ -26,6 +26,16 @@ userRouter.post("/", async (req,res,next)=>{
     const {name, email,state,admin,password,address,phone} = req.body;
     try{
         const newUser = await postUser(name, email,state,admin,password,address,phone);
+        res.status(200).json(newUser);
+    }catch(error){
+        next(error);
+    };
+});
+
+userRouter.post("/singIn", async (req,res,next)=>{
+    const { email, password} = req.body;
+    try{
+        const newUser = await singIn(email,password);
         res.status(200).json(newUser);
     }catch(error){
         next(error);
