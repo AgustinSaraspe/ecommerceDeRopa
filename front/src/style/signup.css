@@ -1,0 +1,66 @@
+.signup-form input{
+  padding: 10px;
+  font-size: 18px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #777;
+  outline: none;
+  color: white;
+}
+
+.signup-form input:focus{
+  animation-name: input-focus;
+  animation-duration: 0.6s;
+  border-bottom: 1px solid #ddd;
+}
+
+@keyframes input-focus{
+  from{
+    border-bottom: 1px solid #777;
+  }to{
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.signup-form label{
+  color: #aaa;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-top: 1rem;
+}
+
+.signup-form button{
+  font-size: 16px;
+  height: 3rem;
+  width: 100%;
+  margin: 1rem auto;
+  background-color: #000;
+  border: none;
+  border-left: 2px solid salmon;
+  cursor: pointer;
+  color: white;
+  transition: 0.5s;
+}
+
+.signup-form button:hover{
+  background-color: #EEE;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-left: 2px solid salmon;
+}
+
+.signup-form p{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+}
+
+.signup-form p a{
+  color: white;
+  transition: 0.3s;
+}
+
+.signup-form p a:hover{
+  color: salmon;
+}
