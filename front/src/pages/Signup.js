@@ -1,7 +1,8 @@
+import { Alert, Snackbar } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 
-function Signup() {
+function Signup({ setLogged }) {
   const [input, setInput] = useState({
     name: "",
     email: "",
@@ -9,6 +10,9 @@ function Signup() {
     phone: "",
     address: "",
   });
+
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +22,10 @@ function Signup() {
     localStorage.setItem("jwt", resultado.data.token);
     if (resultado.data.token) {
       window.location.replace("http://localhost:3000/");
+      setSuccess(!success);
+      setLogged(true);
+    } else {
+      setError(!error);
     }
   };
 
@@ -26,6 +34,15 @@ function Signup() {
       ...input,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSuccess(false);
+    setError(false);
   };
 
   console.log(input);
@@ -96,6 +113,16 @@ function Signup() {
           <a href="http://localhost:3000/login">Inicia Sesión</a>
         </p>
       </div>
+      <Snackbar open={success} autoHideDuration={5000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Se registró con exito!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={error} autoHideDuration={5000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Ha ocurrido un error!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
