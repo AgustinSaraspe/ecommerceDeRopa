@@ -2,7 +2,17 @@ import axios from "axios";
 import React, { useState } from "react";
 import "../style/signup.css";
 
+
+//redux
+import { signIn } from "../redux/actions/actions";
+import {useSelector, useDispatch} from "react-redux";
+
+
 function Login() {
+   //redux
+   const dispatch = useDispatch();
+   const userActual = useSelector((state) => state.user);
+
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -12,13 +22,26 @@ function Login() {
     e.preventDefault();
     Number.parseInt(input.phone);
     console.log(input)
-    let resultado = await axios.post("http://localhost:3001/users", input)
-    if(resultado.data.token){
-      localStorage.setItem("jwt", resultado.data.token);
-      window.location.replace("http://localhost:3000/");
-    }else{
-      alert("El registro fallo");
-    }
+    
+     dispatch(signIn(input));
+
+     if(userActual){
+      console.log(userActual)
+     }
+
+     setTimeout(()=>{
+      if(userActual){
+        console.log(userActual)
+        if (userActual.token) {
+          localStorage.setItem("jwt", userActual.token);
+          window.location.replace("http://localhost:3000/");
+        } else {
+         alert("el login fallo");
+        }
+      }
+    },4000);
+
+  
   };
 
   const handleChange = (e) => {
@@ -71,7 +94,7 @@ function Login() {
           type="password"
           onChange={(e) => handleChange(e)}
         />
-        <button>Iniciar Sesion</button>
+        <button onClick={(e)=>handleSubmit(e)}>Iniciar Sesion</button>
         <p>
           No estás registrado?{" "}
           <a href="http://localhost:3000/signup">Registrarse</a>

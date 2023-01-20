@@ -2,7 +2,16 @@ import { Alert, Snackbar } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 
+
+//redux
+import { signUp } from "../redux/actions/actions";
+import {useSelector, useDispatch} from "react-redux";
+
 function Signup({ setLogged }) {
+  //redux
+  const dispatch = useDispatch();
+  const userActual = useSelector((state) => state.user);
+
   const [input, setInput] = useState({
     name: "",
     email: "",
@@ -17,16 +26,25 @@ function Signup({ setLogged }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     Number.parseInt(input.phone);
+
     console.log(input);
-    let resultado = await axios.post("http://localhost:3001/users", input);
-    localStorage.setItem("jwt", resultado.data.token);
-    if (resultado.data.token) {
-      window.location.replace("http://localhost:3000/");
-      setSuccess(!success);
-      setLogged(true);
-    } else {
-      setError(!error);
-    }
+
+    dispatch(signUp(input));
+
+
+    setTimeout(()=>{
+      if(userActual){
+        console.log(userActual)
+        if (userActual.token) {
+          localStorage.setItem("jwt", userActual.token);
+          window.location.replace("http://localhost:3000/");
+          setSuccess(!success);
+          setLogged(true);
+        } else {
+          setError(!error);
+        }
+      }
+    },4000);
   };
 
   const handleChange = (e) => {
