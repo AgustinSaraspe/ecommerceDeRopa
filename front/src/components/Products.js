@@ -7,21 +7,15 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Skeleton } from "@mui/material";
+import { useSelector } from "react-redux";
 
 function Products() {
-  const [products, setProducts] = useState(null);
-
-  useEffect(() => {
-    const getData = async () => {
-      const result = await axios.get("http://localhost:3001/products");
-      console.log(result.data);
-      setProducts(result.data);
-    };
-    getData();
-  }, []);
+  //redux
+  const products = useSelector((state) => state.products);
 
   //Uso dos useffect para que no se haga un infinite loop
   useEffect(() => {}, [products]);
+  console.log(products);
 
   return (
     <div
