@@ -3,7 +3,7 @@ import axios from "axios";
 import { Alert, Box, Button, Snackbar, TextField } from "@mui/material";
 import "../style/products.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, postProduct } from "../redux/actions/actions";
+import { getAllProducts, postProduct } from "../redux/actions/actions";
 
 //Redux
 
@@ -36,7 +36,7 @@ function Products() {
   };
 
   const dispatch = useDispatch();
-  const products = useSelector(getProducts);
+  const products = useSelector(getAllProducts);
 
   const handleChange = (e) => {
     setInput({
