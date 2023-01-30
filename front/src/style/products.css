@@ -1,0 +1,7 @@
+button:last-of-type{
+  transition: .4s;
+}
+
+button:last-of-type:hover{
+  color: white;
+}
