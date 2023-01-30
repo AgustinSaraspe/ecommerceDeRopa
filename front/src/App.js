@@ -9,18 +9,23 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
 import About from "./pages/About";
+import Avatar from "@mui/material/Avatar";
+
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+import User from "./pages/User";
+import { logoutUser } from "./redux/actions/actions";
 
 function App() {
-  const [logged, setLogged] = useState(false);
-  const [admin, setAdmin] = useState(false);
-  console.log(logged);
+  const loggedUser = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    setLogged(false);
+    dispatch(logoutUser());
     localStorage.removeItem("jwt");
   };
 
-  useEffect(() => {}, [logged]);
+  useEffect(() => {}, [loggedUser]);
 
   return (
     <Router>
@@ -33,16 +38,7 @@ function App() {
             <Link to="/">Inicio</Link>
             <Link to="/store">Productos</Link>
             <Link to="/about">Contacto</Link>
-            {logged ? (
-              <>
-                <button className="log-button">
-                  <Link to="/login">Login</Link>
-                </button>
-                <button className="log-button">
-                  <Link to="/signup">Sign Up</Link>
-                </button>
-              </>
-            ) : (
+            {loggedUser.token ? (
               <>
                 <div className="dropdown-cart">
                   <Link to="/cart" className="cart-btn">
@@ -57,11 +53,15 @@ function App() {
                 <div className="dropdown-user">
                   <i className="fa-solid fa-user" id="drop-user-btn"></i>
                   <div className="dropdown-content">
-                    {admin ? (
+                    {loggedUser.user.admin ? (
                       <button>Cargar un producto</button>
                     ) : (
-                      <button>Mi perfil</button>
+                      <Link to="/user">
+                        <Avatar>{loggedUser.user.name.charAt(0)}</Avatar>
+                      </Link>
                     )}
+                    <h4>{loggedUser.user.name}</h4>
+                    <Link to="/products">Cargar producto</Link>
                     <button
                       onClick={() => {
                         handleLogout();
@@ -72,6 +72,15 @@ function App() {
                   </div>
                 </div>
               </>
+            ) : (
+              <>
+                <button className="log-button">
+                  <Link to="/login">Login</Link>
+                </button>
+                <button className="log-button">
+                  <Link to="/signup">Sign Up</Link>
+                </button>
+              </>
             )}
           </div>
         </nav>
@@ -79,9 +88,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/store" element={<Store />} />
-            <Route path="/login" element={<Login log={setLogged} />} />
-            <Route path="/signup" element={<Signup log={setLogged} />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/user" element={<User />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />

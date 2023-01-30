@@ -6,80 +6,84 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Skeleton } from "@mui/material";
+import { getAllProducts } from "../redux/actions/actions.js";
+
+//Redux
+import { useSelector, useDispatch } from "react-redux";
+import { SkeletonItem } from "../utils/Skeleton";
 
 function Products() {
-  const [products, setProducts] = useState(null);
-
-  useEffect(() => {
-    const getData = async () => {
-      const result = await axios.get("http://localhost:3001/products");
-      console.log(result.data);
-      setProducts(result.data);
-    };
-    getData();
-  }, []);
+  //redux
+  const products = useSelector((state) => state.products);
+  const dispatch = useDispatch();
 
   //Uso dos useffect para que no se haga un infinite loop
-  useEffect(() => {}, [products]);
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [products]);
+  console.log(products);
 
   return (
     <div
       style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
-        margin: "1rem",
+        margin: ".5rem",
+        backgroundColor: "#111111ee",
       }}
     >
-      {products ? (
+      {products.length ? (
         products.map((product) => {
           return (
-            <Card
-              sx={{
-                maxWidth: 320,
-                margin: "1rem",
-                boxShadow: "3px 5px 1rem #DDD",
-              }}
-            >
-              <CardMedia sx={{ height: 140 }} image={""} title={product.name} />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {product.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {product.description}
-                </Typography>
-              </CardContent>
-              <CardActions
+            <div style={{}}>
+              <Card
                 sx={{
-                  justifyContent: "center",
+                  maxWidth: 320,
+                  margin: "1rem",
+                  boxShadow: "3px 5px 1rem #DDD",
                 }}
               >
-                <Button
-                  size="small"
+                <CardMedia
+                  sx={{ height: 140 }}
+                  image={""}
+                  title={product.name}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {product.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {product.description}
+                  </Typography>
+                </CardContent>
+                <CardActions
                   sx={{
-                    fontWeight: "bold",
-                    border: "2px solid",
+                    justifyContent: "center",
                   }}
                 >
-                  Comprar
-                </Button>
-                <Button size="small">Añadir al carrito</Button>
-              </CardActions>
-            </Card>
+                  <Button
+                    size="small"
+                    sx={{
+                      fontWeight: "bold",
+                      border: "2px solid",
+                    }}
+                  >
+                    Comprar
+                  </Button>
+                  <Button size="small">Añadir al carrito</Button>
+                </CardActions>
+              </Card>
+            </div>
           );
         })
       ) : (
         <div
           style={{
-            maxWidth: "345px",
-            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
           }}
         >
-          <Skeleton variant="rectangular" width={345} height={150} />
-          <Skeleton variant="text" sx={{ fontSize: "2rem" }} />
-          <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-          <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+          <SkeletonItem />
+          <SkeletonItem />
+          <SkeletonItem />
         </div>
       )}
     </div>

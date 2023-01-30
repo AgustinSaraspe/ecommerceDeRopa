@@ -2,15 +2,24 @@ import { Alert, Snackbar } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 
-
 //redux
-import { signUp } from "../redux/actions/actions";
-import {useSelector, useDispatch} from "react-redux";
+import { postUser } from "../redux/actions/actions";
+import { useSelector, useDispatch } from "react-redux";
 
-function Signup({ setLogged }) {
+function Signup() {
   //redux
   const dispatch = useDispatch();
-  const userActual = useSelector((state) => state.user);
+  const loggedUser = useSelector((state) => state.user);
+  const allUsers = useSelector((state) => state.users);
+
+  //Snackbars MaterialUI
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
+  const messages = {
+    error: "Error al registrarse!",
+    success: "Se ha registrado correctamente!",
+  };
 
   const [input, setInput] = useState({
     name: "",
@@ -20,31 +29,47 @@ function Signup({ setLogged }) {
     address: "",
   });
 
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     Number.parseInt(input.phone);
-
     console.log(input);
+    if (
+      !(
+        input.name.length &&
+        input.password.length &&
+        input.email.length &&
+        input.phone.length &&
+        input.address.length &&
+        input.email.includes("@")
+      )
+    ) {
+      setTimeout(() => {
+        setMessage(messages.error);
+        setSeverity("error");
+        setOpen(true);
+      }, 3000);
+    } else {
+      setTimeout(() => {
+        dispatch(postUser(input));
+        setMessage(messages.success);
+        setSeverity("success");
+        window.location.replace("http://localhost:3000/");
+        setOpen(true);
+      }, 3000);
+    }
 
-    dispatch(signUp(input));
-
-
-    setTimeout(()=>{
-      if(userActual){
-        console.log(userActual)
-        if (userActual.token) {
-          localStorage.setItem("jwt", userActual.token);
-          window.location.replace("http://localhost:3000/");
-          setSuccess(!success);
-          setLogged(true);
-        } else {
-          setError(!error);
-        }
-      }
-    },4000);
+    // setTimeout(() => {
+    //   if (userActual) {
+    //     console.log(userActual);
+    //     if (userActual.token) {
+    //       localStorage.setItem("jwt", userActual.token);
+    //       window.location.replace("http://localhost:3000/");
+    //       setSuccess(!success);
+    //     } else {
+    //       setError(!error);
+    //     }
+    //   }
+    // }, 4000);
   };
 
   const handleChange = (e) => {
@@ -59,8 +84,7 @@ function Signup({ setLogged }) {
       return;
     }
 
-    setSuccess(false);
-    setError(false);
+    setOpen(false);
   };
 
   console.log(input);
@@ -131,16 +155,16 @@ function Signup({ setLogged }) {
           <a href="http://localhost:3000/login">Inicia Sesión</a>
         </p>
       </div>
-      <Snackbar open={success} autoHideDuration={5000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Se registró con exito!
+      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
+          {message}
         </Alert>
       </Snackbar>
-      <Snackbar open={error} autoHideDuration={5000} onClose={handleClose}>
+      {/* <Snackbar open={error} autoHideDuration={5000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           Ha ocurrido un error!
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
     </div>
   );
 }
