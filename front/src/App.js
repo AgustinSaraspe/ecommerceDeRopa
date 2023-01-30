@@ -61,6 +61,7 @@ function App() {
                       </Link>
                     )}
                     <h4>{loggedUser.user.name}</h4>
+                    <Link to="/products">Cargar producto</Link>
                     <button
                       onClick={() => {
                         handleLogout();

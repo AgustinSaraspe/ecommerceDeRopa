@@ -63,7 +63,7 @@ export const addProductCart = (product) => {
 };
 
 //Product
-export const getProducts = () => {
+export const getAllProducts = () => {
   return async function (dispatch) {
     const products = await axios.get("http://localhost:3001/products");
     return dispatch({
