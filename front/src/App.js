@@ -14,6 +14,7 @@ import Avatar from "@mui/material/Avatar";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 import User from "./pages/User";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,32 +47,41 @@ function App() {
             <Link to="/about">Contacto</Link>
             {user !== null ? (
               <>
-                <div className="dropdown-cart">
-                  <Link to="/cart" className="cart-btn">
-                    <i className="fa-solid fa-cart-shopping"></i>
-                  </Link>
-                  <div className="dropdown-cart-content">
-                    <button>Comprar</button>
-                    {/* Renderizamos los productos del carrito */}
-                    <button>Cancelar compra</button>
+                {!user.admin ? (
+                  <div className="dropdown-cart">
+                    <Link to="/cart" className="cart-btn">
+                      <i className="fa-solid fa-cart-shopping"></i>
+                    </Link>
+                    <div className="dropdown-cart-content">
+                      <button>Comprar</button>
+                      {/* Renderizamos los productos del carrito */}
+                      <button>Cancelar compra</button>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  ""
+                )}
                 <div className="dropdown-user">
-                  <i className="fa-solid fa-user" id="drop-user-btn"></i>
+                  <i class="fa-solid fa-user"></i>
                   <div className="dropdown-content">
-                    <Link to="/user">
+                    <Link
+                      to="/user"
+                      style={{
+                        margin: "0",
+                      }}
+                    >
                       <Avatar>{user.name.charAt(0)}</Avatar>
                     </Link>
-                    <h4>{user.name}</h4>
+                    <h4 style={{ margin: "1rem auto" }}>{user.name}</h4>
                     {user.admin ? (
                       <button
                         onClick={() => {
                           window.location.replace(
-                            "http://localhost:3000/products"
+                            "http://localhost:3000/dashboard"
                           );
                         }}
                       >
-                        Cargar Producto
+                        Dashboard
                       </button>
                     ) : (
                       ""
@@ -79,6 +89,12 @@ function App() {
                     <button
                       onClick={() => {
                         handleLogout();
+                      }}
+                      style={{
+                        backgroundColor: "white",
+                        color: "black",
+                        padding: "10px",
+                        borderLeft: "none",
                       }}
                     >
                       Cerrar Sesión
@@ -108,6 +124,7 @@ function App() {
             <Route path="/user" element={<User />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/about" element={<About />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

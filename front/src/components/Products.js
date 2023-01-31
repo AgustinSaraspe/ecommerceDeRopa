@@ -20,7 +20,6 @@ function Products() {
   //
   const [loading, setLoading] = useState(true);
 
-  //Uso dos useffect para que no se haga un infinite loop
   useEffect(() => {
     dispatch(getAllProducts());
     if (products.length) {

@@ -1,0 +1,55 @@
+.dashboardContainer{
+  display: flex;
+}
+
+.dashboardContainer nav{
+  width: 30%;
+  background-color: #111111ff;
+}
+
+.dashboardContainer nav ul{
+  display: flex;
+  flex-direction: column;
+  padding-inline-start: 0;
+}
+
+.dashboardContainer nav h1{
+  color: white;
+  text-align: center;
+  padding: 2rem auto;
+  font-size: 26px;
+  border-bottom: 1px solid #777;
+}
+
+.dashboardContainer nav h2{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  color: white;
+  text-align: center;
+  margin: 1rem auto;
+  font-size: 18px;
+}
+
+.dashboardContainer nav ul button{
+  display: block;
+  width: 100%;
+  background-color: black;
+  padding: 1rem;
+  color: white;
+  cursor: pointer;
+  border-left: 1.5px solid salmon;
+  animation-name: dropdown-cart;
+  animation-duration: 0.4s; 
+  font-size: 14px;
+}
+
+.dashboardContainer nav ul button:hover{
+  background-color: #1f1f1f;
+  color: white;
+}
+
+.dashboardBody{
+  display: flex;
+  width: 70%;
+  background-color: #eeeeef;
+}
