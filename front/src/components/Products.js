@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { getAllProducts } from "../redux/actions/actions.js";
+import { addProductCart, getAllProducts } from "../redux/actions/actions.js";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -17,61 +17,79 @@ function Products() {
   const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
+  //
+  const [loading, setLoading] = useState(true);
+
   //Uso dos useffect para que no se haga un infinite loop
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [products]);
+    if (products.length) {
+      setLoading(false);
+    }
+  }, []);
   console.log(products);
 
   return (
     <div
-      style={{
-        margin: ".5rem",
-        backgroundColor: "#111111ee",
-      }}
+      style={
+        loading
+          ? {
+              margin: ".5rem",
+              backgroundColor: "#111111ee",
+            }
+          : {
+              backgroundColor: "#111111ee",
+              margin: ".5rem",
+              display: "grid",
+              gridTemplateColumns: "repeat(4,minmax(200px, 1fr))",
+            }
+      }
     >
-      {products.length ? (
+      {!loading ? (
         products.map((product) => {
           return (
-            <div style={{}}>
-              <Card
+            <Card
+              sx={{
+                maxWidth: 320,
+                margin: "1rem",
+                backgroundColor: "transparent",
+                border: "1px solid #ddd",
+              }}
+            >
+              <CardMedia sx={{ height: 140 }} image={""} title={product.name} />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {product.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {product.description}
+                </Typography>
+              </CardContent>
+              <CardActions
                 sx={{
-                  maxWidth: 320,
-                  margin: "1rem",
-                  boxShadow: "3px 5px 1rem #DDD",
+                  justifyContent: "center",
                 }}
               >
-                <CardMedia
-                  sx={{ height: 140 }}
-                  image={""}
-                  title={product.name}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {product.name}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {product.description}
-                  </Typography>
-                </CardContent>
-                <CardActions
+                <Button
+                  size="medium"
                   sx={{
-                    justifyContent: "center",
+                    fontWeight: "bold",
+                    border: "2px solid",
                   }}
                 >
-                  <Button
-                    size="small"
-                    sx={{
-                      fontWeight: "bold",
-                      border: "2px solid",
-                    }}
-                  >
-                    Comprar
-                  </Button>
-                  <Button size="small">Añadir al carrito</Button>
-                </CardActions>
-              </Card>
-            </div>
+                  Comprar
+                </Button>
+                <Button
+                  size="small"
+                  sx={{}}
+                  onClick={() => {
+                    dispatch(addProductCart);
+                  }}
+                >
+                  Agregar al carrito
+                </Button>
+              </CardActions>
+            </Card>
           );
         })
       ) : (

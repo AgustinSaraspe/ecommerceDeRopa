@@ -14,18 +14,24 @@ import Avatar from "@mui/material/Avatar";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 import User from "./pages/User";
-import { logoutUser } from "./redux/actions/actions";
 
 function App() {
-  const loggedUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const [user, setUser] = useState(null);
+  let stringiUser = localStorage.getItem("user");
+
   const handleLogout = () => {
-    dispatch(logoutUser());
-    localStorage.removeItem("jwt");
+    setUser(null);
+    localStorage.removeItem("user");
   };
 
-  useEffect(() => {}, [loggedUser]);
+  useEffect(() => {
+    if (!stringiUser) {
+      return;
+    }
+    setUser(JSON.parse(stringiUser));
+  }, [stringiUser]);
 
   return (
     <Router>
@@ -38,7 +44,7 @@ function App() {
             <Link to="/">Inicio</Link>
             <Link to="/store">Productos</Link>
             <Link to="/about">Contacto</Link>
-            {loggedUser.token ? (
+            {user !== null ? (
               <>
                 <div className="dropdown-cart">
                   <Link to="/cart" className="cart-btn">
@@ -53,15 +59,23 @@ function App() {
                 <div className="dropdown-user">
                   <i className="fa-solid fa-user" id="drop-user-btn"></i>
                   <div className="dropdown-content">
-                    {loggedUser.user.admin ? (
-                      <button>Cargar un producto</button>
+                    <Link to="/user">
+                      <Avatar>{user.name.charAt(0)}</Avatar>
+                    </Link>
+                    <h4>{user.name}</h4>
+                    {user.admin ? (
+                      <button
+                        onClick={() => {
+                          window.location.replace(
+                            "http://localhost:3000/products"
+                          );
+                        }}
+                      >
+                        Cargar Producto
+                      </button>
                     ) : (
-                      <Link to="/user">
-                        <Avatar>{loggedUser.user.name.charAt(0)}</Avatar>
-                      </Link>
+                      ""
                     )}
-                    <h4>{loggedUser.user.name}</h4>
-                    <Link to="/products">Cargar producto</Link>
                     <button
                       onClick={() => {
                         handleLogout();
