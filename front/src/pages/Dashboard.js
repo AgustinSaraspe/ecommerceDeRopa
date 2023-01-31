@@ -3,8 +3,6 @@ import "../style/dashboard.css";
 import Products from "./Products";
 
 function Dashboard() {
-  const [products, setProducts] = useState(false);
-  const [menu, setMenu] = useState(dashboardMenu.NEW_PRODUCT);
   const dashboardMenu = {
     NEW_PRODUCT: "NEW_PRODUCT",
     MODIFY_PRODUCT: "MODIFY_PRODUCT",
@@ -14,6 +12,8 @@ function Dashboard() {
     DELETE_USER: "DELETE_USER",
     SALES: "SALES",
   };
+  const [products, setProducts] = useState(false);
+  const [menu, setMenu] = useState(dashboardMenu.NEW_PRODUCT);
 
   return (
     <div className="dashboardContainer">
