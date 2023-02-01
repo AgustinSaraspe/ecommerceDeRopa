@@ -62,6 +62,9 @@ export const addProductCart = (product) => {
    return { type: types.ADD_CART, payload: product };
 };
 
+ 
+
+
 //Product
 export const getAllProducts = () => {
   return async function (dispatch) {
