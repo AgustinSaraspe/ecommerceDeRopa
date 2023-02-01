@@ -6,11 +6,12 @@ function Cart() {
 
   const cart = useSelector(state => state.cart);
   const [cartLocalStore, setCartLocalStore] = useLocalStorage("cart", "");
-
-  const [newCart2, setNewCart2] = useState(JSON.parse(localStorage.getItem("cart")));
-
-
   
+
+  let priceTotal = cart?.reduce((acc, curr) => {
+    return Number(acc) + Number(curr.price)*Number(curr.cantidad)
+  }, 0);
+
   const handleDeleteCart = (event, id) =>{
     event.preventDefault();
     let newCart = cart.filter((e) => e.id !== id);
@@ -29,13 +30,19 @@ function Cart() {
         cart?.length ? 
         cart?.map((e)=>{
          return <div>
-          <h1>{e.name}</h1> 
-          <button onClick={(event)=>handleDeleteCart(event, e.id)}>X</button>
+          <div>
+           <h1>{e.name}</h1> 
+           <h3>cantidad: {e.cantidad}</h3>
+           <h4>precio: {e.price}</h4>
+           <button onClick={(event)=>handleDeleteCart(event, e.id)}>X</button>
+          </div>
+          
          </div>
         })
         :
         <h1>El carro esta vacio</h1>
       }
+        <h1>{`$${priceTotal}`}</h1>
     </div>
   );
 }
