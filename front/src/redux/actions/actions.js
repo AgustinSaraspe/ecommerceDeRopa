@@ -59,7 +59,7 @@ export const getAllUsers = () => {
 
 //Cart
 export const addProductCart = (product) => {
-  return { type: types.ADD_CART, payload: product };
+   return { type: types.ADD_CART, payload: product };
 };
 
 //Product
