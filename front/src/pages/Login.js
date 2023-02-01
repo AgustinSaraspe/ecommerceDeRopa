@@ -26,14 +26,32 @@ function Login() {
     email: "",
     password: "",
   });
-
-  const [user, setUser] = useState(null);
+  const [click, setClick] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(input);
     dispatch(loginUser(input));
-    if (loggedUser) {
+    setClick(true);
+  };
+
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+    setClick(false);
+  };
+
+  useEffect(() => {
+    if (loggedUser && click) {
       if (loggedUser.token && loggedUser.user) {
         let user = {
           id: loggedUser.user.id,
@@ -61,24 +79,7 @@ function Login() {
         }, 500);
       }
     }
-  };
-
-  const handleChange = (e) => {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  useEffect(() => {}, []);
+  }, [loggedUser]);
 
   return (
     <div>
