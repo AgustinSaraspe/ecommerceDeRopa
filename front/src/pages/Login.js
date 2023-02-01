@@ -27,23 +27,39 @@ function Login() {
     password: "",
   });
 
+  const [user, setUser] = useState(null);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(input);
     dispatch(loginUser(input));
-    if (loggedUser.token) {
-      localStorage.setItem("jwt", loggedUser.token);
-      setTimeout(() => {
-        setMessage(messages.success);
-        setSeverity("success");
-        setOpen(true);
-      }, 500);
-    } else {
-      setTimeout(() => {
-        setMessage(messages.error);
-        setSeverity("error");
-        setOpen(true);
-      }, 500);
+    if (loggedUser) {
+      if (loggedUser.token && loggedUser.user) {
+        let user = {
+          id: loggedUser.user.id,
+          name: loggedUser.user.name,
+          email: loggedUser.user.email,
+          phone: loggedUser.user.phone,
+          address: loggedUser.user.address,
+          state: loggedUser.user.state,
+          admin: loggedUser.user.admin,
+          token: loggedUser.token,
+        };
+        user = JSON.stringify(user);
+        localStorage.setItem("user", user);
+        setTimeout(() => {
+          setMessage(messages.success);
+          setSeverity("success");
+          setOpen(true);
+          window.location.replace("http://localhost:3000/");
+        }, 500);
+      } else {
+        setTimeout(() => {
+          setMessage(messages.error);
+          setSeverity("error");
+          setOpen(true);
+        }, 500);
+      }
     }
   };
 
@@ -62,9 +78,7 @@ function Login() {
     setOpen(false);
   };
 
-  useEffect(() => {
-    if (loggedUser.token) window.location.replace("http://localhost:3000/");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div>
