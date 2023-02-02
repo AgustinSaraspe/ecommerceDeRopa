@@ -97,7 +97,7 @@
 
 /* UPDATE PRODUCTS */
 
-.updateProducts button{
+.searchButton{
   background-color: transparent;
   border: none;
   color: white;
@@ -106,7 +106,7 @@
   transition: .3s;
 }
 
-.updateProducts button:hover{
+.searchButton:hover{
   background-color: transparent;
   color: #777;
 }
