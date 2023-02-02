@@ -2,6 +2,16 @@
   display: flex;
 }
 
+.dashboardContainer nav h1{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px;
+  text-align: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #555;
+  color: white;
+}
+
 .dashboardContainer nav{
   width: 30%;
   background-color: #111111ff;
@@ -13,14 +23,6 @@
   padding-inline-start: 0;
 }
 
-.dashboardContainer nav h1{
-  color: white;
-  text-align: center;
-  padding: 2rem auto;
-  font-size: 26px;
-  border-bottom: 1px solid #777;
-}
-
 .dashboardContainer nav h2{
   font-family: Arial, Helvetica, sans-serif;
   font-weight: normal;
@@ -30,7 +32,7 @@
   font-size: 18px;
 }
 
-.dashboardContainer nav ul button{
+.dashboardButton{
   display: block;
   width: 100%;
   background-color: black;
@@ -38,18 +40,73 @@
   color: white;
   cursor: pointer;
   border-left: 1.5px solid salmon;
-  animation-name: dropdown-cart;
-  animation-duration: 0.4s; 
   font-size: 14px;
+  transition: .3s;
 }
 
-.dashboardContainer nav ul button:hover{
+.dashboardButton:hover{
   background-color: #1f1f1f;
   color: white;
+  border-left: 2px solid salmon;
 }
 
 .dashboardBody{
   display: flex;
   width: 70%;
   background-color: #eeeeef;
+}
+
+.productMenu input{
+  padding: .7rem;
+  width: 60%;
+  margin: .5rem auto;
+  font-size: 20px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #777;
+  outline: none;
+  color: white;
+}
+
+.productMenu label{
+  font-family: arial;
+  
+}
+
+.productMenu button{
+  margin: 0 auto;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-bottom: 1rem;
+}
+
+.productMenu button:hover{
+  background-color: #fff;
+  color: black;
+  border-color: white;
+}
+
+.productMenu h2{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px;
+  text-align: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #555;
+}
+
+/* UPDATE PRODUCTS */
+
+.updateProducts button{
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  justify-content: center;
+  transition: .3s;
+}
+
+.updateProducts button:hover{
+  background-color: transparent;
+  color: #777;
 }

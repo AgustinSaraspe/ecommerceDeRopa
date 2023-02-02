@@ -62,7 +62,7 @@ function App() {
                   ""
                 )}
                 <div className="dropdown-user">
-                  <i class="fa-solid fa-user"></i>
+                  <i className="fa-solid fa-user"></i>
                   <div className="dropdown-content">
                     <Link
                       to="/user"
