@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { postProduct } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts, postProduct } from "../../redux/actions/actions";
+import { ShowFoundProducts } from "../ShowFoundProducts";
 
 export const UpdateProduct = () => {
   const dispatch = useDispatch();
-  const formStyle = {
-    display: "flex",
-    flexDirection: "column",
-  };
+
+  const products = useSelector((state) => state.products);
+  const [productsFound, setProductsFound] = useState(null);
+
   const [input, setInput] = useState({
     name: "",
     price: "",
@@ -16,6 +17,11 @@ export const UpdateProduct = () => {
     description: "",
   });
   const [search, setSearch] = useState("");
+
+  const formStyle = {
+    display: "flex",
+    flexDirection: "column",
+  };
 
   const clearInputs = (e) => {
     //FUNCION PARA BORRAR CONTENIDO DE LOS INPUTS
@@ -94,6 +100,20 @@ export const UpdateProduct = () => {
     errorInput: "Por favor rellene todos los campos",
   };
 
+  useEffect(() => {
+    // MOTOR DE BUSQUEDA
+    dispatch(getAllProducts());
+    const productFound = [];
+    if (search.length) {
+      products.map((product) => {
+        if (product.name.toLowerCase().includes(search.toLowerCase()))
+          // console.log(product.id);
+          productFound.push(product);
+        setProductsFound(productFound);
+      });
+    }
+  }, [search]);
+
   return (
     <div>
       <div className="productMenu" style={formStyle}>
@@ -108,6 +128,7 @@ export const UpdateProduct = () => {
           <button onClick={handleSearchSubmit} className="searchButton">
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
+          <ShowFoundProducts products={productsFound} />
         </div>
       </div>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
