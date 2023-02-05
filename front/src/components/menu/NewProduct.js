@@ -8,6 +8,7 @@ export const NewProduct = () => {
   const formStyle = {
     display: "flex",
     flexDirection: "column",
+    margin: "2rem 20%",
   };
 
   const clearInputs = (e) => {

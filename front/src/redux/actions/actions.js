@@ -9,6 +9,7 @@ export const types = {
   GET_ALL_PRODUCTS: "GET_ALL_PRODUCTS",
   GET_PRODUCT: "GET_PRODUCT",
   POST_PRODUCT: "POST_PRODUCT",
+  UPDATE_PRODUCT: "UPDATE_PRODUCT",
 };
 
 //User
@@ -59,11 +60,8 @@ export const getAllUsers = () => {
 
 //Cart
 export const addProductCart = (product) => {
-   return { type: types.ADD_CART, payload: product };
+  return { type: types.ADD_CART, payload: product };
 };
-
- 
-
 
 //Product
 export const getAllProducts = () => {
@@ -83,6 +81,19 @@ export const postProduct = (input) => {
     const product = await axios.post("http://localhost:3001/products", input);
     return dispatch({
       type: types.POST_PRODUCT,
+      payload: product.data,
+    });
+  };
+};
+
+export const updateProduct = (input, id) => {
+  return async function (dispatch) {
+    const product = await axios.put(
+      `http://localhost:3001/products/${id}`,
+      input
+    );
+    return dispatch({
+      type: types.UPDATE_PRODUCT,
       payload: product.data,
     });
   };

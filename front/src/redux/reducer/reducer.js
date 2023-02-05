@@ -51,6 +51,11 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         products: [...state.products, payload],
       };
+    case types.UPDATE_PRODUCT:
+      return {
+        ...state,
+        product: payload,
+      };
     default:
       return state;
   }
