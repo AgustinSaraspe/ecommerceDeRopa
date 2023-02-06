@@ -2,7 +2,6 @@ import React from "react";
 import { menuTypes } from "../utils/menuTypes";
 import { DeleteProduct } from "./menu/DeleteProducts";
 import { DeleteUser } from "./menu/DeleteUser";
-import { ListProducts } from "./menu/ListProducts";
 import { ListUsers } from "./menu/ListUsers";
 import { NewProduct } from "./menu/NewProduct";
 import { NewUser } from "./menu/NewUser";
@@ -22,32 +21,6 @@ const generalStyle = {
   textAlign: "center",
 };
 
-/* -------------------------------------------------------- */
-//Helpers
-
-/* -------------------------------------------------------- */
-//Handlers
-
-/* -------------------------------------------------------- */
-//Componentes
-
-/* ------------------- MODIFICAR PRODUCTO -------------------- */
-
-/* ----------------- BORRAR PRODUCTOS ------------------*/
-
-/* -------------------- LISTAR PRODUCTOS ---------------------*/
-
-/* -------------- NUEVO USUARIO --------------- */
-
-/* -------------- EDITAR USUARIO -------------- */
-
-/* ------------- BORRAR USUARIOS ---------------*/
-
-/* ------------ LISTAR USUARIOS -------------- */
-
-/* -------------------------------------------------------- */
-//Funcion Principal
-
 export function Menu({ menu }) {
   switch (menu) {
     case menuTypes.NEW_PRODUCT:
@@ -66,12 +39,6 @@ export function Menu({ menu }) {
       return (
         <div style={generalStyle}>
           <DeleteProduct />
-        </div>
-      );
-    case menuTypes.LIST_PRODUCTS:
-      return (
-        <div style={generalStyle}>
-          <ListProducts />
         </div>
       );
     case menuTypes.NEW_USER:

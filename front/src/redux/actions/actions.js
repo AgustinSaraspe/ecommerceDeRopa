@@ -10,6 +10,7 @@ export const types = {
   GET_PRODUCT: "GET_PRODUCT",
   POST_PRODUCT: "POST_PRODUCT",
   UPDATE_PRODUCT: "UPDATE_PRODUCT",
+  DELETE_PRODUCT: "DELETE_PRODUCT",
 };
 
 //User
@@ -94,6 +95,19 @@ export const updateProduct = (input, id) => {
     );
     return dispatch({
       type: types.UPDATE_PRODUCT,
+      payload: product.data,
+    });
+  };
+};
+
+export const deleteProduct = (id) => {
+  return async function (dispatch) {
+    const product = await axios.delete(
+      `http://localhost:3001/products/${id}`,
+      id
+    );
+    return dispatch({
+      type: types.DELETE_PRODUCT,
       payload: product.data,
     });
   };

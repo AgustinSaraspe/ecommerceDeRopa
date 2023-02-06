@@ -32,12 +32,6 @@ function Dashboard() {
           >
             Eliminar Producto
           </button>
-          <button
-            className="dashboardButton"
-            onClick={() => setMenu(menuTypes.LIST_PRODUCTS)}
-          >
-            Listar Productos
-          </button>
         </ul>
         <h2>Usuarios</h2>
         <ul>

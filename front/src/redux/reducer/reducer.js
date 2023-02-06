@@ -56,6 +56,11 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         product: payload,
       };
+    case types.DELETE_PRODUCT:
+      return {
+        ...state,
+        product: payload,
+      };
     default:
       return state;
   }
