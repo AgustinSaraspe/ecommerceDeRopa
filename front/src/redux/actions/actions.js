@@ -6,6 +6,7 @@ export const types = {
   GET_ALL_USERS: "GET_ALL_USERS",
   LOGIN_USER: "LOGIN_USER",
   LOGOUT_USER: "LOGOUT_USER",
+  UPDATE_USER: "UPDATE_USER",
   GET_ALL_PRODUCTS: "GET_ALL_PRODUCTS",
   GET_PRODUCT: "GET_PRODUCT",
   POST_PRODUCT: "POST_PRODUCT",
@@ -55,6 +56,16 @@ export const getAllUsers = () => {
     return dispatch({
       type: types.GET_ALL_USERS,
       payload: users.data,
+    });
+  };
+};
+
+export const updateUser = (input, id) => {
+  return async function (dispatch) {
+    const user = await axios.put(`http://localhost:3001/users/${id}`, input);
+    return dispatch({
+      type: types.UPDATE_USER,
+      payload: user.data,
     });
   };
 };

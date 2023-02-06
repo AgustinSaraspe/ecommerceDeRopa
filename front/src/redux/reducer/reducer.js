@@ -26,6 +26,11 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         user: payload,
       };
+    case types.UPDATE_PRODUCT:
+      return {
+        ...state,
+        user: payload,
+      };
     case types.LOGIN_USER:
       return {
         ...state,

@@ -46,3 +46,59 @@
   background-color: #eee;
   color: black;
 }
+
+/* ---------------- */
+
+.modalBoxUser{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 1rem;
+}
+.modalBoxUser h1{
+  color: white;
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 1rem;
+}
+.modalBoxUser label{
+  color: #999;
+  margin: .5rem 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+.modalBoxUser input{
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  border-bottom: 1px solid #555;
+  outline: none;
+  font-size: 18px;
+  font-weight: lighter;
+  padding: 2px;
+}
+.modalBoxUser label:nth-of-type(4){
+  text-align: center;
+}
+.modalBoxUser label:last-of-type{
+  text-align: center;
+}
+.modalButtonUser{
+  background-color: transparent;
+  border: none;
+  color: #bbb;
+  font-size: 15px;
+  margin: .2rem auto;
+  padding: .5rem 3rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+.modalButtonUser:first-of-type{
+  margin-top: 1rem;
+  border-left: 4px solid salmon;
+  background-color: black;
+  padding: 1rem 200px;
+  transition: .3s;
+}
+.modalButtonUser:first-of-type:hover{
+  background-color: #eee;
+  color: black;
+}

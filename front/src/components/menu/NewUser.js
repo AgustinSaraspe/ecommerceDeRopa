@@ -1,30 +1,40 @@
 import React, { useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { postProduct } from "../../redux/actions/actions";
+import { postUser } from "../../redux/actions/actions";
 
 export const NewUser = () => {
   const dispatch = useDispatch();
   const formStyle = {
     display: "flex",
     flexDirection: "column",
+    margin: "2rem 20%",
   };
+
+  const [active, setActive] = useState(true);
+  const [admin, setAdmin] = useState(false);
+
   const [input, setInput] = useState({
     name: "",
-    price: "",
-    stock: "",
-    description: "",
+    email: "",
+    state: active,
+    admin: admin,
+    password: "",
+    address: "",
+    phone: "",
   });
-  const [search, setSearch] = useState("");
 
   const clearInputs = (e) => {
     //FUNCION PARA BORRAR CONTENIDO DE LOS INPUTS
 
     setInput({
       name: "",
-      price: "",
-      stock: "",
-      description: "",
+      email: "",
+      state: active,
+      admin: admin,
+      password: "",
+      address: "",
+      phone: "",
     });
   };
 
@@ -36,31 +46,19 @@ export const NewUser = () => {
     console.log(input);
   };
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-    console.log("search:", search);
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (!search.length) {
-      return;
-    }
-    console.log(search);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(input);
     if (
-      input.name.length &&
-      input.price.length &&
-      input.stock.length &&
-      input.description.length
+      input.name &&
+      input.email &&
+      input.password &&
+      input.phone &&
+      input.address
     ) {
       //AQUI PODRIAMOS MANEJAR UN POSIBLE ERROR EN EL BACKEND
       console.log("successfull");
-      dispatch(postProduct(input));
+      dispatch(postUser(input));
       clearInputs();
       setTimeout(() => {
         setMessage(messages.success);
@@ -89,25 +87,88 @@ export const NewUser = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const messages = {
-    success: "El producto se editó con exito!",
-    error: "El producto no se pudo editar!",
+    success: "Usuario creado con exito!",
+    error: "El usuario no se pudo crear!",
     errorInput: "Por favor rellene todos los campos",
   };
+
   return (
     <div>
       <div className="productMenu" style={formStyle}>
         <h2>Nuevo Usuario</h2>
-        <div className="newUser">
-          <input
-            placeholder="Buscar usuario"
-            name="search"
-            value={search}
-            onChange={handleSearch}
-          />
-          <button onClick={handleSearchSubmit} className="searchButton">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </div>
+        <label>Nombre</label>
+        <input name="name" onChange={handleChange} value={input.name} />
+        <label>Email</label>
+        <input
+          name="email"
+          type="email"
+          onChange={handleChange}
+          value={input.email}
+        />
+        <label>Contraseña</label>
+        <input
+          name="password"
+          type="password"
+          onChange={handleChange}
+          value={input.password}
+        />
+        <label>Direccion</label>
+        <input name="address" onChange={handleChange} value={input.address} />
+        <label>Telefono</label>
+        <input
+          name="phone"
+          type="tel"
+          onChange={handleChange}
+          value={input.phone}
+        />
+        <label
+          style={{
+            marginTop: "1rem",
+          }}
+        >
+          Admin
+        </label>
+        <select
+          style={{
+            padding: "1rem",
+            backgroundColor: "#111",
+            color: "#fff",
+            margin: ".5rem auto",
+          }}
+          name="admin"
+          onChange={handleChange}
+        >
+          <option value={true}>Yes</option>
+          <option value={false}>No</option>
+        </select>
+        <label>Estado</label>
+        <select
+          style={{
+            padding: "1rem",
+            backgroundColor: "#111",
+            color: "#fff",
+            margin: ".5rem auto",
+          }}
+          name="state"
+          onChange={handleChange}
+        >
+          <option value={true}>Activo</option>
+          <option value={false}>Inactivo</option>
+        </select>
+        <button className="dashboardButton" onClick={handleSubmit}>
+          Guardar Usuario
+        </button>
+        <button
+          style={{
+            backgroundColor: "transparent",
+            width: "auto",
+            border: "none",
+            color: "white",
+          }}
+          onClick={clearInputs}
+        >
+          Cancelar
+        </button>
       </div>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
