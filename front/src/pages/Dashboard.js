@@ -1,19 +1,12 @@
 import React, { useState } from "react";
+import { Menu } from "../components/Menu";
 import "../style/dashboard.css";
 import Products from "./Products";
+import { menuTypes } from "../utils/menuTypes";
 
 function Dashboard() {
-  const dashboardMenu = {
-    NEW_PRODUCT: "NEW_PRODUCT",
-    MODIFY_PRODUCT: "MODIFY_PRODUCT",
-    DELETE_PRODUCT: "DELETE_PRODUCT",
-    NEW_USER: "NEW_USER",
-    MODIFY_USER: "MODIFY_USER",
-    DELETE_USER: "DELETE_USER",
-    SALES: "SALES",
-  };
   const [products, setProducts] = useState(false);
-  const [menu, setMenu] = useState(dashboardMenu.NEW_PRODUCT);
+  const [menu, setMenu] = useState(menuTypes.NEW_PRODUCT);
 
   return (
     <div className="dashboardContainer">
@@ -21,22 +14,63 @@ function Dashboard() {
         <h1>Dashboard</h1>
         <h2>Productos</h2>
         <ul>
-          <button>Nuevo Producto</button>
-          <button>Modificar Producto</button>
-          <button>Eliminar Producto</button>
+          <button
+            className="dashboardButton"
+            onClick={() => setMenu(menuTypes.NEW_PRODUCT)}
+          >
+            Nuevo Producto
+          </button>
+          <button
+            className="dashboardButton"
+            onClick={() => setMenu(menuTypes.UPDATE_PRODUCT)}
+          >
+            Modificar Producto
+          </button>
+          <button
+            className="dashboardButton"
+            onClick={() => setMenu(menuTypes.DELETE_PRODUCT)}
+          >
+            Eliminar Producto
+          </button>
         </ul>
         <h2>Usuarios</h2>
         <ul>
-          <button>Nuevo Usuario</button>
-          <button>Modificar Usuario</button>
-          <button>Eliminar Usuario</button>
+          <button
+            className="dashboardButton"
+            onClick={() => setMenu(menuTypes.NEW_USER)}
+          >
+            Nuevo Usuario
+          </button>
+          <button
+            className="dashboardButton"
+            onClick={() => setMenu(menuTypes.UPDATE_USER)}
+          >
+            Modificar Usuario
+          </button>
+          <button
+            className="dashboardButton"
+            onClick={() => setMenu(menuTypes.DELETE_USER)}
+          >
+            Eliminar Usuario
+          </button>
+          <button
+            className="dashboardButton"
+            onClick={() => setMenu(menuTypes.LIST_USERS)}
+          >
+            Listar Usuarios
+          </button>
         </ul>
         <h2>Ventas</h2>
         <ul>
-          <button>Ver ventas</button>
+          <button
+            className="dashboardButton"
+            onClick={() => setMenu(menuTypes.SALES)}
+          >
+            Ver ventas
+          </button>
         </ul>
       </nav>
-      <div className="dashboardBody">{}</div>
+      <Menu menu={menu} />
     </div>
   );
 }
