@@ -46,7 +46,7 @@ const createProduct = async (name, price, stock, state, description,category) =>
 
     //En caso de pasar todas las validaciones, creamos el producto :D
     const nuevoProducto = await Product.create({
-      name,
+      name: newName,
       price,
       stock,
       state,

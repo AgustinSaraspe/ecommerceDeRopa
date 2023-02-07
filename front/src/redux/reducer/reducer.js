@@ -71,6 +71,10 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         product: payload,
       };
+      case types.POST_PICTURE:
+        return{
+          ...state
+        }
     default:
       return state;
   }
