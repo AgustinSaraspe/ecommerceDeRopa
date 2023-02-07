@@ -1,10 +1,13 @@
 const {Picture, Product} = require("../db.js");
 
 
-const postPicture = async (url, productId)=>{
+const postPicture = async (url, productName)=>{
     if(!url) throw new Error("La url es requerida");
 
-    const pictureProduct = await Product.findByPk(productId);
+    const pictureProduct = await Product.findOne({
+        where:{
+            name: productName
+    }});
     if(!pictureProduct) throw new Error("Producto no encontrado");
 
     const result = await Picture.create({

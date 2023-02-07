@@ -6,8 +6,8 @@ const pictureRouter = Router();
 
 pictureRouter.post("/", async (req, res, next)=>{
     try{
-       const {url, productId} = req.body;
-       const result = await postPicture(url,productId);
+       const {url, name} = req.body;
+       const result = await postPicture(url, name);
        res.status(200).json(result);
     }catch(error){
         next(error);
