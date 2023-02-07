@@ -79,6 +79,8 @@ export const UpdateUser = () => {
           userFound.push(user);
         setUsersFound(userFound);
       });
+    } else {
+      setUsersFound(users);
     }
   }, [search]);
 

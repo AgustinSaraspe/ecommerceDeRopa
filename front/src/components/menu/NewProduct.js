@@ -32,12 +32,7 @@ export const NewProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(input);
-    if (
-      input.name.length &&
-      input.price.length &&
-      input.stock.length &&
-      input.description.length
-    ) {
+    if (input.name && input.price && input.stock) {
       //AQUI PODRIAMOS MANEJAR UN POSIBLE ERROR EN EL BACKEND
       console.log("successfull");
       dispatch(postProduct(input));

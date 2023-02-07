@@ -79,6 +79,8 @@ export const UpdateProduct = () => {
           productFound.push(product);
         setProductsFound(productFound);
       });
+    } else {
+      setProductsFound(products);
     }
   }, [search]);
 
@@ -148,6 +150,7 @@ const ShowFoundProducts = ({ products }) => {
                 <h6>{`Id: ${product.id}`}</h6>
                 <h5>{`${product.name}`}</h5>
                 <h6>{`Precio: $${product.price}`}</h6>
+                <i className="fa-solid fa-pencil"></i>
               </button>
             );
           })

@@ -56,12 +56,17 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         products: [...state.products, payload],
       };
-    case types.UPDATE_PRODUCT:
+    case types.UPDATE_USER:
       return {
         ...state,
         product: payload,
       };
     case types.DELETE_PRODUCT:
+      return {
+        ...state,
+        product: payload,
+      };
+    case types.DELETE_USER:
       return {
         ...state,
         product: payload,

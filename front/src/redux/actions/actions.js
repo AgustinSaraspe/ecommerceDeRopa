@@ -7,6 +7,7 @@ export const types = {
   LOGIN_USER: "LOGIN_USER",
   LOGOUT_USER: "LOGOUT_USER",
   UPDATE_USER: "UPDATE_USER",
+  DELETE_USER: "DELETE_USER",
   GET_ALL_PRODUCTS: "GET_ALL_PRODUCTS",
   GET_PRODUCT: "GET_PRODUCT",
   POST_PRODUCT: "POST_PRODUCT",
@@ -65,6 +66,16 @@ export const updateUser = (input, id) => {
     const user = await axios.put(`http://localhost:3001/users/${id}`, input);
     return dispatch({
       type: types.UPDATE_USER,
+      payload: user.data,
+    });
+  };
+};
+
+export const deleteUser = (id) => {
+  return async function (dispatch) {
+    const user = await axios.delete(`http://localhost:3001/users/${id}`);
+    return dispatch({
+      type: types.DELETE_USER,
       payload: user.data,
     });
   };
