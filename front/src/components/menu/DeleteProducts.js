@@ -113,6 +113,8 @@ export const DeleteProduct = () => {
           productFound.push(product);
         setProductsFound(productFound);
       });
+    } else {
+      setProductsFound(products);
     }
   }, [search]);
 

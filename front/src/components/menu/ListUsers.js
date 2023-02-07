@@ -1,44 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, Snackbar } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { postProduct } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../../redux/actions/actions";
 
 export const ListUsers = () => {
   const dispatch = useDispatch();
+
+  const users = useSelector((state) => state.users);
+  const [usersFound, setUsersFound] = useState(null);
+
+  const [input, setInput] = useState({
+    name: "",
+    email: "",
+    password: "",
+    admin: false,
+    state: true,
+    address: "",
+    phone: "",
+  });
+  const [search, setSearch] = useState("");
+
   const formStyle = {
     display: "flex",
     flexDirection: "column",
   };
-  const [input, setInput] = useState({
-    name: "",
-    price: "",
-    stock: "",
-    description: "",
-  });
-  const [search, setSearch] = useState("");
-
-  const clearInputs = (e) => {
-    //FUNCION PARA BORRAR CONTENIDO DE LOS INPUTS
-
-    setInput({
-      name: "",
-      price: "",
-      stock: "",
-      description: "",
-    });
-  };
-
-  const handleChange = (e) => {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-    console.log(input);
-  };
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
-    console.log("search:", search);
   };
 
   const handleSearchSubmit = (e) => {
@@ -47,34 +35,6 @@ export const ListUsers = () => {
       return;
     }
     console.log(search);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(input);
-    if (
-      input.name.length &&
-      input.price.length &&
-      input.stock.length &&
-      input.description.length
-    ) {
-      //AQUI PODRIAMOS MANEJAR UN POSIBLE ERROR EN EL BACKEND
-      console.log("successfull");
-      dispatch(postProduct(input));
-      clearInputs();
-      setTimeout(() => {
-        setMessage(messages.success);
-        setSeverity("success");
-        setOpen(true);
-      }, 500);
-    } else {
-      setTimeout(() => {
-        console.log("error");
-        setMessage(messages.errorInput);
-        setSeverity("error");
-        setOpen(true);
-      }, 500);
-    }
   };
 
   const handleClose = (event, reason) => {
@@ -89,15 +49,32 @@ export const ListUsers = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const messages = {
-    success: "El producto se editó con exito!",
-    error: "El producto no se pudo editar!",
+    success: "El usuario se editó con exito!",
+    error: "El usuario no se pudo editar!",
     errorInput: "Por favor rellene todos los campos",
   };
+
+  useEffect(() => {
+    // MOTOR DE BUSQUEDA
+    dispatch(getAllUsers());
+    const userFound = [];
+    if (search.length) {
+      users.map((user) => {
+        if (user.name.toLowerCase().includes(search.toLowerCase()))
+          // console.log(users.id);
+          userFound.push(user);
+        setUsersFound(userFound);
+      });
+    } else {
+      setUsersFound(users);
+    }
+  }, [search]);
+
   return (
     <div>
       <div className="productMenu" style={formStyle}>
-        <h2>Listar Usuarios</h2>
-        <div className="">
+        <h2>Editar Usuarios</h2>
+        <div className="updateProducts">
           <input
             placeholder="Buscar usuario"
             name="search"
@@ -107,6 +84,7 @@ export const ListUsers = () => {
           <button onClick={handleSearchSubmit} className="searchButton">
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
+          <ShowFoundProducts users={usersFound} />
         </div>
       </div>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -114,6 +92,62 @@ export const ListUsers = () => {
           {message}
         </Alert>
       </Snackbar>
+    </div>
+  );
+};
+
+//
+// ░░░░░▄░░░░░░█▄█░░░░░
+// ░░░▄▀░░░░░▄▄██▀░░░░░
+// ░░░▀▄░░▄██████░░░░░░
+// ▒░▒░▀▄████▀█▀█▒░▒░▒▒
+// ░▒░▒░▒▀██▄▒█▒█░▒░▒░░
+
+const ShowFoundProducts = ({ users }) => {
+  useEffect(() => {}, [users]);
+  const [selection, setSelection] = useState(null);
+
+  return (
+    <div>
+      <ul
+        style={{
+          paddingInlineStart: 0,
+        }}
+      >
+        {users ? (
+          users.map((user) => {
+            return (
+              <button
+                key={user.id}
+                style={{
+                  display: "flex",
+                  width: "80%",
+                  alignItems: "center",
+                  fontFamily: "verdana",
+                  border: "1px solid #555",
+                  padding: "2rem",
+                  margin: ".5rem auto",
+                  backgroundColor: "transparent",
+                  color: "#ddd",
+                  justifyContent: "space-between",
+                  fontSize: "16px",
+                  cursor: "default",
+                }}
+              >
+                <h6>{`Id: ${user.id}`}</h6>
+                <h5>{`Nombre: ${user.name}`}</h5>
+                <h6>{`Email: ${user.email}`}</h6>
+                <h6>{`Admin: ${user.admin}`}</h6>
+                <h6>{`Tel: ${user.phone}`}</h6>
+                <h6>{`Direc: ${user.address}`}</h6>
+              </button>
+            );
+          })
+        ) : (
+          // <h3>No se encontraron useros.</h3>
+          <></>
+        )}
+      </ul>
     </div>
   );
 };
