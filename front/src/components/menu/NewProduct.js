@@ -1,15 +1,47 @@
-import React, { useState } from "react";
-import { Alert, Snackbar } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { postProduct } from "../../redux/actions/actions";
+import React, { useEffect, useState } from "react";
+import { Alert, inputAdornmentClasses, Snackbar } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { postProduct,getAllProducts,postPicture } from "../../redux/actions/actions";
+import axios from "axios";
 
 export const NewProduct = () => {
+
+  const [input, setInput] = useState({
+    name: "",
+    price: "",
+    stock: "",
+    description: "",
+  });
+
+
   const dispatch = useDispatch();
   const formStyle = {
     display: "flex",
     flexDirection: "column",
     margin: "2rem 20%",
   };
+
+  const products = useSelector((state)=>state.products);
+
+ // Cloudinary
+ const [image, setImage] = useState('');
+
+ const uploadImage = async (e) => {
+   const files = e.target.files;
+   const data = new FormData();
+
+   data.append('file', files[0]);
+   data.append('upload_preset', 'images');
+   const { data: file } = await axios.post(
+     'https://api.cloudinary.com/v1_1/dev3snn9g/image/upload',
+     data,
+   );
+
+   setImage(file.secure_url);
+
+   console.log(file);
+ };
+
 
   const clearInputs = (e) => {
     //FUNCION PARA BORRAR CONTENIDO DE LOS INPUTS
@@ -35,6 +67,8 @@ export const NewProduct = () => {
     if (input.name && input.price && input.stock) {
       //AQUI PODRIAMOS MANEJAR UN POSIBLE ERROR EN EL BACKEND
       console.log("successfull");
+
+      console.log(input)
       dispatch(postProduct(input));
       clearInputs();
       setTimeout(() => {
@@ -42,7 +76,13 @@ export const NewProduct = () => {
         setSeverity("success");
         setOpen(true);
       }, 500);
-    } else {
+    
+     let values = {
+       url: image,
+       name: input.name
+     }
+      dispatch(postPicture(values))
+    } else { 
       setTimeout(() => {
         console.log("error");
         setMessage(messages.errorInput);
@@ -51,6 +91,16 @@ export const NewProduct = () => {
       }, 500);
     }
   };
+
+
+  console.log("product",products);
+
+  useEffect(()=>{
+
+    dispatch(getAllProducts());
+
+  },[dispatch])
+
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -69,12 +119,7 @@ export const NewProduct = () => {
     errorInput: "Por favor rellene todos los campos",
   };
 
-  const [input, setInput] = useState({
-    name: "",
-    price: "",
-    stock: "",
-    description: "",
-  });
+  
 
   return (
     <div>
@@ -102,6 +147,13 @@ export const NewProduct = () => {
           onChange={handleChange}
           value={input.description}
         />
+        <label>Imagen</label>
+        <input
+          type="file"
+          name="file"
+          onChange={uploadImage}
+        />
+
         <button className="dashboardButton" onClick={handleSubmit}>
           Guardar Producto
         </button>

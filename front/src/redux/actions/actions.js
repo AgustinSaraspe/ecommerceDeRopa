@@ -13,6 +13,7 @@ export const types = {
   POST_PRODUCT: "POST_PRODUCT",
   UPDATE_PRODUCT: "UPDATE_PRODUCT",
   DELETE_PRODUCT: "DELETE_PRODUCT",
+  POST_PICTURE: "POST_PICTURE"
 };
 
 //User
@@ -131,6 +132,16 @@ export const deleteProduct = (id) => {
     return dispatch({
       type: types.DELETE_PRODUCT,
       payload: product.data,
+    });
+  };
+};
+
+
+export const postPicture = (values) => {
+  return async function (dispatch) {
+    const picture = await axios.post("http://localhost:3001/picture", values);
+    return dispatch({
+      type: types.POST_PICTURE,
     });
   };
 };
