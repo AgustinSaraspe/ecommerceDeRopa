@@ -80,33 +80,20 @@ const getAllUsers = async () => {
 };
 
 //PUT
-const updateUser = async (
-  id,
-  name,
-  email,
-  state,
-  admin,
-  password,
-  address,
-  phone
-) => {
-  if (!id || !name || !email || !state || !password || !address || !phone)
-    throw new Error("Falta un argumento");
-
-  await User.update(
-    {
-      name,
-      email,
-      state,
-      admin: admin !== true ? false : true,
-      password,
-      address,
-      phone,
-    },
-    {
-      where: { id: id },
-    }
-  );
+const updateUser = async (body, id) => {
+  try {
+    let updated = await User.update(
+      { ...body },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    return updated;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 //DELETE

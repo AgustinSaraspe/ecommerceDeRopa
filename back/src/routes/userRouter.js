@@ -57,20 +57,14 @@ userRouter.post("/logIn", async (req, res, next) => {
   }
 });
 
-userRouter.put("/", async (req, res, next) => {
-  const { id, name, email, state, admin, password, address, phone } = req.body;
+userRouter.put("/:id", async (req, res, next) => {
   try {
-    const user = await updateUser(
-      id,
-      name,
-      email,
-      state,
-      admin,
-      password,
-      address,
-      phone
-    );
-    res.status(200).json("Done");
+    const update = updateUser(req.body, req.params.id);
+    if (!update)
+      return res
+        .status(404)
+        .json({ message: "No hay un usuario con ese id! " });
+    res.status(200).json({ message: "Usuario modificado con exito!" });
   } catch (error) {
     next(error);
   }

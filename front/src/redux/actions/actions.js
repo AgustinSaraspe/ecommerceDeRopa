@@ -6,9 +6,13 @@ export const types = {
   GET_ALL_USERS: "GET_ALL_USERS",
   LOGIN_USER: "LOGIN_USER",
   LOGOUT_USER: "LOGOUT_USER",
+  UPDATE_USER: "UPDATE_USER",
+  DELETE_USER: "DELETE_USER",
   GET_ALL_PRODUCTS: "GET_ALL_PRODUCTS",
   GET_PRODUCT: "GET_PRODUCT",
   POST_PRODUCT: "POST_PRODUCT",
+  UPDATE_PRODUCT: "UPDATE_PRODUCT",
+  DELETE_PRODUCT: "DELETE_PRODUCT",
 };
 
 //User
@@ -57,13 +61,30 @@ export const getAllUsers = () => {
   };
 };
 
-//Cart
-export const addProductCart = (product) => {
-   return { type: types.ADD_CART, payload: product };
+export const updateUser = (input, id) => {
+  return async function (dispatch) {
+    const user = await axios.put(`http://localhost:3001/users/${id}`, input);
+    return dispatch({
+      type: types.UPDATE_USER,
+      payload: user.data,
+    });
+  };
 };
 
- 
+export const deleteUser = (id) => {
+  return async function (dispatch) {
+    const user = await axios.delete(`http://localhost:3001/users/${id}`);
+    return dispatch({
+      type: types.DELETE_USER,
+      payload: user.data,
+    });
+  };
+};
 
+//Cart
+export const addProductCart = (product) => {
+  return { type: types.ADD_CART, payload: product };
+};
 
 //Product
 export const getAllProducts = () => {
@@ -83,6 +104,32 @@ export const postProduct = (input) => {
     const product = await axios.post("http://localhost:3001/products", input);
     return dispatch({
       type: types.POST_PRODUCT,
+      payload: product.data,
+    });
+  };
+};
+
+export const updateProduct = (input, id) => {
+  return async function (dispatch) {
+    const product = await axios.put(
+      `http://localhost:3001/products/${id}`,
+      input
+    );
+    return dispatch({
+      type: types.UPDATE_PRODUCT,
+      payload: product.data,
+    });
+  };
+};
+
+export const deleteProduct = (id) => {
+  return async function (dispatch) {
+    const product = await axios.delete(
+      `http://localhost:3001/products/${id}`,
+      id
+    );
+    return dispatch({
+      type: types.DELETE_PRODUCT,
       payload: product.data,
     });
   };
