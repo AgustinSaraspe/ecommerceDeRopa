@@ -5,3 +5,37 @@ button:last-of-type{
 button:last-of-type:hover{
   color: white;
 }
+
+.buyProductBtn{
+  background-color: #000;
+  flex: 8;
+  padding: 1rem;
+  border: 1px solid #eee;
+  color: #eee;
+  cursor: pointer;
+  font-size: 16px;
+  transition: .3s;
+}
+.buyProductBtn:hover{
+  background-color: #eee;
+  border: 1px solid #000;
+  color: #000;
+  font-weight: bold;
+}
+
+.cartProductBtn{
+  background-color: #eee;
+  flex: 2;
+  padding: 1rem;
+  border: 1px solid #555;
+  color: #111;
+  cursor: pointer;
+  font-size: 16px;
+  transition: .3s;
+}
+
+.cartProductBtn:hover{
+  background-color: #111;
+  border: 1px solid #eee;
+  color: #eee;
+}
