@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
       price: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: 0.00,
+        defaultValue: 0.0,
       },
       stock: {
         type: DataTypes.STRING,
@@ -28,6 +28,10 @@ module.exports = (sequelize) => {
         defaultValue: true,
       },
       description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      file: {
         type: DataTypes.STRING,
         allowNull: true,
       },

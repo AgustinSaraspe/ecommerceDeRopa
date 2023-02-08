@@ -4,29 +4,23 @@ const { Product, Category, Picture } = require("../db.js");
 const getAllProducts = async () => {
   try {
     let allProducts = await Product.findAll({
-      include: { model: Category}
+      include: { model: Category },
     });
 
-    let pic = await Picture.findAll();
-
-    let newProducts =  allProducts.map((value)=>{
-
-      let imagenes = pic.filter((el) => el.ProductId === value.id);
-
+    let newProducts = allProducts.map((value) => {
       return {
-      id: value.id,
-      name: value.name,
-      description: value.description,
-      price: value.price,
-      state: value.state,
-      stock: value.stock,
-      category: value.Categories.map(el=>el.name),
-      picture: imagenes.map((el)=> el.url)
-     };
-   });
+        id: value.id,
+        name: value.name,
+        description: value.description,
+        price: value.price,
+        state: value.state,
+        stock: value.stock,
+        file: value.file,
+        category: value.Categories.map((el) => el.name),
+      };
+    });
 
-   return newProducts
-    
+    return newProducts;
   } catch (error) {
     throw new Error(error);
   }
@@ -36,7 +30,7 @@ const getAllProducts = async () => {
 const getOneProduct = async (id) => {
   try {
     let product = await Product.findByPk(id, {
-       include : {model : Category}
+      include: { model: Category },
     });
     if (!product) throw new Error(`No se encontró el producto con id: ${id}`);
     return valuesToReturn(product);
@@ -46,7 +40,15 @@ const getOneProduct = async (id) => {
 };
 
 //Crea un nuevo producto
-const createProduct = async (name, price, stock, state, description,category) => {
+const createProduct = async (
+  name,
+  price,
+  stock,
+  state,
+  description,
+  file,
+  category
+) => {
   try {
     //Comprobamos que todos los argumentos esten definidos.
     // if (!name || !price || !stock || !state || !description)
@@ -63,7 +65,6 @@ const createProduct = async (name, price, stock, state, description,category) =>
       },
     });
     if (resultado) throw new Error("El producto ya existe");
-
     //En caso de pasar todas las validaciones, creamos el producto :D
     const nuevoProducto = await Product.create({
       name: newName,
@@ -71,12 +72,13 @@ const createProduct = async (name, price, stock, state, description,category) =>
       stock,
       state,
       description,
+      file,
     });
 
     let categoryProduct = await Category.findAll({
-      where:{
-         name: category
-      }
+      where: {
+        name: category,
+      },
     });
     nuevoProducto.addCategory(categoryProduct);
 
@@ -127,8 +129,7 @@ module.exports = {
 };
 
 const valuesToReturn = (value) => {
-
-  let img = getPictureProduct(value.id)
+  let img = getPictureProduct(value.id);
   return {
     id: value.id,
     name: value.name,
@@ -136,20 +137,19 @@ const valuesToReturn = (value) => {
     price: value.price,
     state: value.state,
     stock: value.stock,
-    category: value.Categories.map(el=>el.name),
-    picture: img.map((el) => el)
+    category: value.Categories.map((el) => el.name),
+    picture: img.map((el) => el),
   };
 };
 
 const getPictureProduct = async (id) => {
-
   let pic = await Picture.findAll({
-    where:{
-      ProductId: id
-    }
+    where: {
+      ProductId: id,
+    },
   });
 
-  console.log(pic)
+  console.log(pic);
 
   return pic;
 };
