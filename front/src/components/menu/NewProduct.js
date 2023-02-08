@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Alert, inputAdornmentClasses, Snackbar } from "@mui/material";
+import {
+  Alert,
+  CircularProgress,
+  inputAdornmentClasses,
+  Snackbar,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { postProduct,getAllProducts,postPicture } from "../../redux/actions/actions";
+import {
+  postProduct,
+  getAllProducts,
+  postPicture,
+} from "../../redux/actions/actions";
 import axios from "axios";
 
 export const NewProduct = () => {
-
   const [input, setInput] = useState({
     name: "",
     price: "",
     stock: "",
     description: "",
+    file: "",
   });
-
 
   const dispatch = useDispatch();
   const formStyle = {
@@ -21,27 +29,28 @@ export const NewProduct = () => {
     margin: "2rem 20%",
   };
 
-  const products = useSelector((state)=>state.products);
+  const products = useSelector((state) => state.products);
 
- // Cloudinary
- const [image, setImage] = useState('');
+  // Cloudinary
+  const [image, setImage] = useState("");
+  const [loadingImage, setLoadingImage] = useState(false);
 
- const uploadImage = async (e) => {
-   const files = e.target.files;
-   const data = new FormData();
+  const uploadImage = async (e) => {
+    setLoadingImage(true);
+    const files = e.target.files;
+    const data = new FormData();
+    console.log("FILES", files);
 
-   data.append('file', files[0]);
-   data.append('upload_preset', 'images');
-   const { data: file } = await axios.post(
-     'https://api.cloudinary.com/v1_1/dev3snn9g/image/upload',
-     data,
-   );
+    data.append("file", files[0]);
+    data.append("upload_preset", "images");
+    const { data: file } = await axios.post(
+      "https://api.cloudinary.com/v1_1/dev3snn9g/image/upload",
+      data
+    );
 
-   setImage(file.secure_url);
-
-   console.log(file);
- };
-
+    setImage(file.secure_url);
+    setLoadingImage(false);
+  };
 
   const clearInputs = (e) => {
     //FUNCION PARA BORRAR CONTENIDO DE LOS INPUTS
@@ -50,6 +59,7 @@ export const NewProduct = () => {
       price: "",
       stock: "",
       description: "",
+      file: "",
     });
   };
 
@@ -68,7 +78,7 @@ export const NewProduct = () => {
       //AQUI PODRIAMOS MANEJAR UN POSIBLE ERROR EN EL BACKEND
       console.log("successfull");
 
-      console.log(input)
+      console.log(input);
       dispatch(postProduct(input));
       clearInputs();
       setTimeout(() => {
@@ -76,23 +86,7 @@ export const NewProduct = () => {
         setSeverity("success");
         setOpen(true);
       }, 500);
-    
-     let values =  {
-      url: image,
-      name: input.name
-     }
-
-    //  image ? {
-    //   url: image,
-    //   name: input.name
-    // } :
-
-    setTimeout(() => {
-      dispatch(postPicture(values))
-      
-    }, 500);
-
-    } else { 
+    } else {
       setTimeout(() => {
         console.log("error");
         setMessage(messages.errorInput);
@@ -102,15 +96,20 @@ export const NewProduct = () => {
     }
   };
 
+  console.log("product", products);
 
-  console.log("product",products);
-
-  useEffect(()=>{
-
+  useEffect(() => {
     dispatch(getAllProducts());
+  }, [dispatch]);
 
-  },[dispatch])
-
+  useEffect(() => {
+    console.log(image);
+    setInput({
+      ...input,
+      file: image,
+    });
+    console.log(input);
+  }, [image]);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -128,8 +127,6 @@ export const NewProduct = () => {
     error: "El producto no se pudo agregar!",
     errorInput: "Por favor rellene todos los campos",
   };
-
-  
 
   return (
     <div>
@@ -152,21 +149,22 @@ export const NewProduct = () => {
           value={input.stock}
         />
         <label>Descripcion</label>
-        <input 
+        <input
           name="description"
           onChange={handleChange}
           value={input.description}
         />
         <label>Imagen</label>
-        <input
-          type="file"
-          name="file"
-          onChange={uploadImage}
-        />
+        {loadingImage ? <CircularProgress /> : <></>}
+        <input type="file" name="file" onChange={uploadImage} />
+        {image ? (
+          <button className="dashboardButton" onClick={handleSubmit}>
+            Guardar Producto
+          </button>
+        ) : (
+          <button disabled={true}>Guardar</button>
+        )}
 
-        <button className="dashboardButton" onClick={handleSubmit}>
-          Guardar Producto
-        </button>
         <button
           style={{
             backgroundColor: "transparent",
