@@ -46,13 +46,13 @@ const createProduct = async (
   stock,
   state,
   description,
-  file,
-  category
+  category,
+  file
 ) => {
   try {
     //Comprobamos que todos los argumentos esten definidos.
-    // if (!name || !price || !stock || !state || !description)
-    //   throw new Error("El argumento no esta definido");
+    if (!name || !price || !stock || !description || !file)
+      throw new Error("El argumento no esta definido");
     //Comprobamos que los argumentos price y stock sean numeros.
     if (isNaN(price) || isNaN(stock))
       throw new Error("El argumento no es un numero");
@@ -64,6 +64,7 @@ const createProduct = async (
         name: newName,
       },
     });
+
     if (resultado) throw new Error("El producto ya existe");
     //En caso de pasar todas las validaciones, creamos el producto :D
     const nuevoProducto = await Product.create({

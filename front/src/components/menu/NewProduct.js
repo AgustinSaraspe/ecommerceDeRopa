@@ -78,7 +78,13 @@ export const NewProduct = () => {
       //AQUI PODRIAMOS MANEJAR UN POSIBLE ERROR EN EL BACKEND
       console.log("successfull");
 
-      console.log(input);
+      //seteo la imagen en propiedad file antes de postear
+      setInput({
+        ...input,
+        file: image,
+      });
+
+      console.log("input submit", input);
       dispatch(postProduct(input));
       clearInputs();
       setTimeout(() => {

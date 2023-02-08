@@ -31,16 +31,8 @@ productRouter.get("/:id", async (req, res, next) => {
 productRouter.post("/", async (req, res, next) => {
   try {
     const { name, price, stock, state, description, category, file } = req.body;
-    const result = await createProduct(
-      name,
-      price,
-      stock,
-      state,
-      description,
-      category,
-      file
-    );
-    console.log(result.file);
+    const result = await createProduct(name,price,stock,state,description,category,file);
+
     res.status(201).json(result);
   } catch (error) {
     next(error);
