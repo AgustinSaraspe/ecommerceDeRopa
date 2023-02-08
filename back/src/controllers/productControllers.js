@@ -1,4 +1,4 @@
-const { Product, Category } = require("../db.js");
+const { Product, Category, Picture } = require("../db.js");
 
 //Trae todos los productos
 const getAllProducts = async () => {
@@ -6,7 +6,27 @@ const getAllProducts = async () => {
     let allProducts = await Product.findAll({
       include: { model: Category}
     });
-    return allProducts.map((el) => valuesToReturn(el.toJSON()));
+
+    let pic = await Picture.findAll();
+
+    let newProducts =  allProducts.map((value)=>{
+
+      let imagenes = pic.filter((el) => el.ProductId === value.id);
+
+      return {
+      id: value.id,
+      name: value.name,
+      description: value.description,
+      price: value.price,
+      state: value.state,
+      stock: value.stock,
+      category: value.Categories.map(el=>el.name),
+      picture: imagenes.map((el)=> el.url)
+     };
+   });
+
+   return newProducts
+    
   } catch (error) {
     throw new Error(error);
   }
@@ -107,6 +127,8 @@ module.exports = {
 };
 
 const valuesToReturn = (value) => {
+
+  let img = getPictureProduct(value.id)
   return {
     id: value.id,
     name: value.name,
@@ -115,5 +137,19 @@ const valuesToReturn = (value) => {
     state: value.state,
     stock: value.stock,
     category: value.Categories.map(el=>el.name),
+    picture: img.map((el) => el)
   };
+};
+
+const getPictureProduct = async (id) => {
+
+  let pic = await Picture.findAll({
+    where:{
+      ProductId: id
+    }
+  });
+
+  console.log(pic)
+
+  return pic;
 };

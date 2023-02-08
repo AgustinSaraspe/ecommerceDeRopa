@@ -77,11 +77,21 @@ export const NewProduct = () => {
         setOpen(true);
       }, 500);
     
-     let values = {
-       url: image,
-       name: input.name
+     let values =  {
+      url: image,
+      name: input.name
      }
+
+    //  image ? {
+    //   url: image,
+    //   name: input.name
+    // } :
+
+    setTimeout(() => {
       dispatch(postPicture(values))
+      
+    }, 500);
+
     } else { 
       setTimeout(() => {
         console.log("error");
@@ -142,7 +152,7 @@ export const NewProduct = () => {
           value={input.stock}
         />
         <label>Descripcion</label>
-        <input
+        <input 
           name="description"
           onChange={handleChange}
           value={input.description}
