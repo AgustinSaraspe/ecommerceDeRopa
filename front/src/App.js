@@ -20,7 +20,10 @@ function App() {
   const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
+  // const [quantity, setQuantity] = useState(null);
+  // const [cart, setCart] = useState(null);
   let stringiUser = localStorage.getItem("user");
+  let cart = JSON.parse(localStorage.getItem("cart"));
 
   const handleLogout = () => {
     setUser(null);
@@ -33,6 +36,9 @@ function App() {
     }
     setUser(JSON.parse(stringiUser));
   }, [stringiUser]);
+
+  useEffect(() => {}, [cart]);
+  console.log(cart.length);
 
   return (
     <Router>
@@ -53,9 +59,31 @@ function App() {
                       <i className="fa-solid fa-cart-shopping"></i>
                     </Link>
                     <div className="dropdown-cart-content">
-                      <button>Comprar</button>
-                      {/* Renderizamos los productos del carrito */}
-                      <button>Cancelar compra</button>
+                      {cart.map((product) => (
+                        <div>
+                          <div
+                            style={{
+                              width: "50px",
+                              height: "auto",
+                            }}
+                          >
+                            <img
+                              style={{
+                                width: "100%",
+                                height: "auto",
+                              }}
+                              src={product.file}
+                            />
+                          </div>
+                          <h5>{product.name}</h5>
+                          <h5>${product.price}</h5>
+                          <button>
+                            <i className="fa-solid fa-trash"></i>
+                          </button>
+                        </div>
+                      ))}
+                      <button>Ver carrito</button>
+                      <button>Comprar carrito</button>
                     </div>
                   </div>
                 ) : (

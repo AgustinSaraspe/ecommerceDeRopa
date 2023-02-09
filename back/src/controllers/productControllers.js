@@ -51,8 +51,11 @@ const createProduct = async (
 ) => {
   try {
     //Comprobamos que todos los argumentos esten definidos.
-    if (!name || !price || !stock || !description || !file)
-      throw new Error("El argumento no esta definido");
+    if (!name || !price || !stock) {
+      if (!name) throw new Error("Falta un name");
+      if (!price) throw new Error("Falta price");
+      if (!stock) throw new Error("Falta stock");
+    }
     //Comprobamos que los argumentos price y stock sean numeros.
     if (isNaN(price) || isNaN(stock))
       throw new Error("El argumento no es un numero");

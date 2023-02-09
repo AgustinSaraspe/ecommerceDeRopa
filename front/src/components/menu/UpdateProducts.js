@@ -138,7 +138,7 @@ const ShowFoundProducts = ({ products }) => {
                   width: "60%",
                   alignItems: "center",
                   fontFamily: "verdana",
-                  border: "1px solid #555",
+                  border: "1px solid #ddd",
                   padding: "1rem",
                   margin: ".5rem auto",
                   backgroundColor: "transparent",
@@ -148,6 +148,21 @@ const ShowFoundProducts = ({ products }) => {
                 onClick={() => setSelection(product)}
               >
                 <h6>{`Id: ${product.id}`}</h6>
+                <div
+                  style={{
+                    width: "100px",
+                    height: "auto",
+                    border: "1px solid #ddd",
+                  }}
+                >
+                  <img
+                    src={product.file}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                    }}
+                  />
+                </div>
                 <h5>{`${product.name}`}</h5>
                 <h6>{`Precio: $${product.price}`}</h6>
                 <i className="fa-solid fa-pencil"></i>
