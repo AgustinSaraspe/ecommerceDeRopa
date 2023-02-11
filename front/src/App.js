@@ -11,13 +11,17 @@ import Cart from "./pages/Cart";
 import About from "./pages/About";
 import Avatar from "@mui/material/Avatar";
 
+import { useLocalStorage } from "./useLocalStorage/useLocalStorage.js";
+
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 import User from "./pages/User";
 import Dashboard from "./pages/Dashboard";
+import { removeAllCart } from "./redux/actions/actions";
 
 function App() {
   const dispatch = useDispatch();
+  const [cartLocalStore, setCartLocalStore] = useLocalStorage("cart", "");
 
   const [user, setUser] = useState(null);
   // const [quantity, setQuantity] = useState(null);
@@ -25,9 +29,25 @@ function App() {
   let stringiUser = localStorage.getItem("user");
   let cart = JSON.parse(localStorage.getItem("cart"));
 
+  const totalCart = () => {
+    let total = 0;
+    console.log("Total antes: " + total);
+    cart.map((product) => {
+      console.log("PRECIO" + product.price);
+      console.log("CANTIDAD" + product.cantidad);
+      // total = total + product.price * product.cantidad;
+    });
+    console.log("Total final: " + total);
+  };
+
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem("user");
+  };
+
+  const removeCart = () => {
+    dispatch(removeAllCart());
+    localStorage.removeItem("cart")
   };
 
   useEffect(() => {
@@ -39,6 +59,7 @@ function App() {
 
   useEffect(() => {}, [cart]);
   console.log(cart.length);
+  totalCart();
 
   return (
     <Router>
@@ -59,11 +80,17 @@ function App() {
                       <i className="fa-solid fa-cart-shopping"></i>
                     </Link>
                     <div className="dropdown-cart-content">
+                      <h4>Carrito</h4>
+                      {/* {totalCart} */}
+                      <div className="cart-actions">
+                        <button>Ver carrito</button>
+                        <button onClick={removeCart}>Eliminar carrito</button>
+                      </div>
                       {cart.map((product) => (
                         <div>
                           <div
                             style={{
-                              width: "50px",
+                              maxWidth: "90px",
                               height: "auto",
                             }}
                           >
@@ -75,15 +102,15 @@ function App() {
                               src={product.file}
                             />
                           </div>
-                          <h5>{product.name}</h5>
-                          <h5>${product.price}</h5>
+                          <h6>{product.name}</h6>
+                          <h6>${product.price}</h6>
+                          <h6>x{product.cantidad}u</h6>
+                          {/* Aqui se podría implementar un select para seleccionar la cantidad de productos a agregar al carrito, lo cual se extraería del total de stock restante. */}
                           <button>
                             <i className="fa-solid fa-trash"></i>
                           </button>
                         </div>
                       ))}
-                      <button>Ver carrito</button>
-                      <button>Comprar carrito</button>
                     </div>
                   </div>
                 ) : (
