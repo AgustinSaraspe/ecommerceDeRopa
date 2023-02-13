@@ -135,27 +135,71 @@
 .dropdown-cart-content{
   display: none;
   position: absolute;
-  justify-content: end;
   min-width: 250px;
-  min-height: 600px;
-  background-color: black;
+  max-height: 400px;
+  overflow: scroll;
+  overflow-x: hidden;
+  background-color: #111;
   border: 1px solid #777777;
-  margin: 0 -7rem;
+  margin: 0 -16rem;
   padding: 6px;
   z-index: 1;
-  box-shadow: 0 1px 5px #888;
+}
+
+.dropdown-cart-content::-webkit-scrollbar{
+  background-color: #777;
+  width: 3px;
+}
+
+.dropdown-cart-content::-webkit-scrollbar-thumb{
+  background-color: #111;
+  border-radius: 5px;
+}
+
+.dropdown-cart-content h4{
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: lighter;
+  margin: .3rem;
+  color: #eee;
 }
 
 .dropdown-cart button{
   display: block;
   width: 100%;
-  background-color: black;
+  background-color: #111;
   padding: 1rem 2rem;
   color: white;
   cursor: pointer;
   border-left: 1.5px solid salmon;
   animation-name: dropdown-cart;
   animation-duration: 0.4s; 
+}
+
+.dropdown-cart-content div{
+  display: flex;
+  width: 100%;
+  border: 1px solid #555;
+  margin-bottom: .3rem;
+}
+
+.dropdown-cart-content h6{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: lighter;
+  flex: 9;
+  text-align: center;
+  align-self: center;
+  color: #eee;
+}
+
+.cart-actions{
+
+}
+
+.dropdown-cart-content div button{
+  border: none;
+  width: auto;
+  flex: 1;
 }
 
 .dropdown-cart button:hover{

@@ -2,6 +2,7 @@ import axios from "axios";
 export const types = {
   POST_USER: "POST_USER",
   ADD_CART: "ADD_CART",
+  REMOVE_CART: "REMOVE_CART",
   GET_USER: "GET_USER",
   GET_ALL_USERS: "GET_ALL_USERS",
   LOGIN_USER: "LOGIN_USER",
@@ -13,7 +14,7 @@ export const types = {
   POST_PRODUCT: "POST_PRODUCT",
   UPDATE_PRODUCT: "UPDATE_PRODUCT",
   DELETE_PRODUCT: "DELETE_PRODUCT",
-  POST_PICTURE: "POST_PICTURE"
+  POST_PICTURE: "POST_PICTURE",
 };
 
 //User
@@ -87,6 +88,10 @@ export const addProductCart = (product) => {
   return { type: types.ADD_CART, payload: product };
 };
 
+export const removeAllCart = () => {
+  return { type: types.REMOVE_CART };
+};
+
 //Product
 export const getAllProducts = () => {
   return async function (dispatch) {
@@ -135,7 +140,6 @@ export const deleteProduct = (id) => {
     });
   };
 };
-
 
 export const postPicture = (values) => {
   return async function (dispatch) {

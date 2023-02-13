@@ -46,6 +46,11 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         cart: [...state.cart, payload.payload],
       };
+    case types.REMOVE_CART:
+      return {
+        ...state,
+        cart: [initialState.cart],
+      };
     case types.GET_ALL_PRODUCTS:
       return {
         ...state,
@@ -71,10 +76,10 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         product: payload,
       };
-      case types.POST_PICTURE:
-        return{
-          ...state
-        }
+    case types.POST_PICTURE:
+      return {
+        ...state,
+      };
     default:
       return state;
   }
