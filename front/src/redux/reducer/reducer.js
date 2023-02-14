@@ -7,6 +7,7 @@ const initialState = {
     ? JSON.parse(localStorage.getItem("cart"))
     : [],
   products: [],
+  userCart:[]
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -50,6 +51,16 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         cart: [initialState.cart],
+      };
+      case types.UPDATE_CART:
+      return {
+        ...state,
+        cart: payload,
+      };
+      case types.GET_USER_CART:
+      return {
+        ...state,
+        userCart: payload,
       };
     case types.GET_ALL_PRODUCTS:
       return {

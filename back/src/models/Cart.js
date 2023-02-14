@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.NOW,
       },
       totalPrice: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },

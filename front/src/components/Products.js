@@ -38,7 +38,6 @@ function Products() {
       }
 
       if (existe) {
-        console.log("cantidad", cantidadActual);
 
         let newProduct = {
           ...product,
@@ -82,11 +81,11 @@ function Products() {
     }
   }, [products]);
 
-  console.log("producst", products);
 
   useEffect(() => {
     if (cart) {
       console.log("cart", cart);
+      console.log("cartLocal", cartLocalStore);
       setCartLocalStore(cart);
     }
   }, [cart]);
