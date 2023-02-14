@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
 import About from "./pages/About";
 import Avatar from "@mui/material/Avatar";
+import axios from "axios";
 
 import { useLocalStorage } from "./useLocalStorage/useLocalStorage.js";
 
@@ -17,10 +18,13 @@ import { useLocalStorage } from "./useLocalStorage/useLocalStorage.js";
 import { useDispatch, useSelector } from "react-redux";
 import User from "./pages/User";
 import Dashboard from "./pages/Dashboard";
-import { removeAllCart } from "./redux/actions/actions";
+import { getUserCart, postCart, removeAllCart, updateCart } from "./redux/actions/actions";
 
 function App() {
   const dispatch = useDispatch();
+
+  const userCart = useSelector((state)=>state.userCart);
+
   const [cartLocalStore, setCartLocalStore] = useLocalStorage("cart", "");
 
   const [user, setUser] = useState(null);
@@ -44,6 +48,37 @@ function App() {
     setUser(null);
     localStorage.removeItem("user");
   };
+   
+  useEffect( ()=>{
+    if(user !== null){
+     (async()=>{
+
+       let res = await axios(`http://localhost:3001/cart/${user.id}`)
+       dispatch(getUserCart(user.id));
+       console.log("userCart",res.data);
+       
+       if(res.data[res.data.length - 1].state === "completed"){
+
+        console.log("entro")
+        let totalPrice = "0"
+        dispatch(postCart(user.id, totalPrice));
+       }
+     })()
+    }
+  },[user])
+
+
+
+  const handleDeleteCart = (event, id) =>{
+    event.preventDefault();
+    let newCart = cart.filter((e) => e.id !== id);
+    console.log(newCart)
+    setCartLocalStore(newCart);
+    dispatch(updateCart(newCart));
+  }
+  
+
+  console.log("cart", cart)
 
   const removeCart = () => {
     dispatch(removeAllCart());
@@ -57,7 +92,15 @@ function App() {
     setUser(JSON.parse(stringiUser));
   }, [stringiUser]);
 
-  useEffect(() => {}, [cart]);
+
+ useEffect(()=>{
+
+ },[cartLocalStore])
+
+  useEffect(() => {
+
+  },[cart]);
+
   console.log(cart.length);
   totalCart();
 
@@ -106,7 +149,7 @@ function App() {
                           <h6>${product.price}</h6>
                           <h6>x{product.cantidad}u</h6>
                           {/* Aqui se podría implementar un select para seleccionar la cantidad de productos a agregar al carrito, lo cual se extraería del total de stock restante. */}
-                          <button>
+                          <button onClick={(e)=>handleDeleteCart(e, product.id)}>
                             <i className="fa-solid fa-trash"></i>
                           </button>
                         </div>

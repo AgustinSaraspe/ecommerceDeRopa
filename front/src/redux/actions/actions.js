@@ -15,6 +15,9 @@ export const types = {
   UPDATE_PRODUCT: "UPDATE_PRODUCT",
   DELETE_PRODUCT: "DELETE_PRODUCT",
   POST_PICTURE: "POST_PICTURE",
+  UPDATE_CART: "UPDATE_CART",
+  GET_USER_CART: "GET_USER_CART",
+  POST_CART:"POST_CART"
 };
 
 //User
@@ -91,6 +94,38 @@ export const addProductCart = (product) => {
 export const removeAllCart = () => {
   return { type: types.REMOVE_CART };
 };
+
+export const updateCart = (value) => {
+  return async function (dispatch) {
+    return dispatch({
+      type: types.UPDATE_CART,
+      payload: value,
+    });
+  };
+};
+
+export const postCart = (id, totalPrice) =>{
+  return async function(dispatch){
+    let values = {
+      idUser: id,
+      totalPrice: totalPrice
+    }
+    const cart = await axios.post("http://localhost:3001/cart",values);
+    return dispatch({ 
+      type: types.POST_CART,
+    })
+  }
+
+}
+
+
+export const getUserCart = (id) => {
+  return async function (dispatch) {
+    const userCart = await axios.get(`http://localhost:3001/cart/${id}`);
+    return dispatch({ type: types.GET_USER_CART, payload: userCart.data });
+  };
+};
+
 
 //Product
 export const getAllProducts = () => {
