@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateCart } from "../redux/actions/actions";
 import { useLocalStorage } from "../useLocalStorage/useLocalStorage";
 import axios from "axios";
-
+import "../style/cart.css";
 
 function Cart() {
 
@@ -11,12 +10,10 @@ function Cart() {
   const cart = useSelector(state => state.cart);
   const userCarts = useSelector((state)=>state.userCart);
   const [cartLocalStore, setCartLocalStore] = useLocalStorage("cart", "");
-  const dispatch = useDispatch();
 
   let priceTotal = cart?.reduce((acc, curr) => {
-    return Number(acc) + Number(curr.price)*Number(curr.cantidad)
+    return Number(acc) + Number(curr.price) * Number(curr.cantidad);
   }, 0);
-
  
   let lastCart = userCarts[userCarts.length - 1]?.id;
 
@@ -25,9 +22,12 @@ function Cart() {
   const handleDeleteCart = (event, id) =>{
     event.preventDefault();
     let newCart = cart.filter((e) => e.id !== id);
-    console.log(newCart)
-    
+    console.log(newCart);
     setCartLocalStore(newCart);
+    window.location.reload();
+  };
+
+  useEffect(() => {}, [cartLocalStore]);
     dispatch(updateCart(newCart))
   }
   
@@ -48,24 +48,40 @@ function Cart() {
   console.log("user",cart)
 
 
-  useEffect(()=>{
-  },[cartLocalStore])
-      
- 
   return (
-    <div>
-      {
-        cart?.length ? 
-        cart?.map((e)=>{
-         return <div>
+    <div className="cart-container">
+      <h1>Carrito</h1>
+      <div>
+        <div className="cart-products-container">
+          {cart?.length ? (
+            cart?.map((e) => {
+              return (
+                <div className="cart-products">
+                  <div className="cart-product-img">
+                    <img src={e.file} alt={e.name} />
+                  </div>
+                  <h2>{e.name}</h2>
+                  <h4>cantidad: {e.cantidad}</h4>
+                  <h3>${e.price}</h3>
+                  <button onClick={(event) => handleDeleteCart(event, e.id)}>
+                    <i className="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              );
+            })
+          ) : (
+            <h1>El carro esta vacio</h1>
+          )}
+        </div>
+        <div className="cart-menu">
+          <h3>Total carrito</h3>
+          <h4>${priceTotal}</h4>
           <div>
-           <h1>{e.name}</h1> 
-           <h3>cantidad: {e.cantidad}</h3>
-           <h4>precio: {e.price}</h4>
-           <button onClick={(event)=>handleDeleteCart(event, e.id)}>X</button>
+            <button>Comprar Carrito</button>
+            <button>Cancelar compra</button>
           </div>
-          
-         </div>
+      </div>
+   </div>
         })
         :
         <h1>El carro esta vacio</h1>
