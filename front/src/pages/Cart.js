@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { updateCart } from "../redux/actions/actions";
 import { useLocalStorage } from "../useLocalStorage/useLocalStorage";
 
 function Cart() {
 
   const cart = useSelector(state => state.cart);
   const [cartLocalStore, setCartLocalStore] = useLocalStorage("cart", "");
-  
+  const dispatch = useDispatch();
 
   let priceTotal = cart?.reduce((acc, curr) => {
     return Number(acc) + Number(curr.price)*Number(curr.cantidad)
@@ -16,10 +17,12 @@ function Cart() {
     event.preventDefault();
     let newCart = cart.filter((e) => e.id !== id);
     console.log(newCart)
+    
     setCartLocalStore(newCart);
-    window.location.reload();
+    dispatch(updateCart(newCart))
   }
   
+
   useEffect(()=>{
   },[cartLocalStore])
       

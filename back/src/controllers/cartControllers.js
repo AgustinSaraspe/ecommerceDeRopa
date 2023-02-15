@@ -25,7 +25,8 @@ const getOneCart = async (idUser) => {
 //Crea un nuevo carrito
 const createCart = async (idUser,totalPrice) => {
   try {
-    if (!totalPrice || !idUser) throw new Error("Falta un argumento");
+    if (!idUser) throw new Error(`Falta un argumento id`);
+    if (!totalPrice) throw new Error(`Falta un argumento totalPrice`);
     
     let cart = await Cart.create({
       UserId: idUser,
