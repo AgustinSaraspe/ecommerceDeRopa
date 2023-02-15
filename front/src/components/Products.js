@@ -13,7 +13,11 @@ import { useLocalStorage } from "../useLocalStorage/useLocalStorage";
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 import { SkeletonItem } from "../utils/Skeleton";
-import { getAllProducts, addProductCart } from "../redux/actions/actions.js";
+import {
+  getAllProducts,
+  addProductCart,
+  getCart,
+} from "../redux/actions/actions.js";
 
 function Products() {
   //redux
@@ -38,6 +42,7 @@ function Products() {
       }
 
       if (existe) {
+        console.log("cantidad", cantidadActual);
 
         let newProduct = {
           ...product,
@@ -68,6 +73,8 @@ function Products() {
     }
   };
 
+  console.log("CART: ", cart);
+
   //Uso dos useffect para que no se haga un infinite loop
   useEffect(() => {
     dispatch(getAllProducts());
@@ -81,14 +88,11 @@ function Products() {
     }
   }, [products]);
 
-
   useEffect(() => {
     if (cart) {
       console.log("cart", cart);
-      console.log("cartLocal", cartLocalStore);
-      setCartLocalStore(cart);
     }
-  }, [cart]);
+  }, [cartLocalStore]);
 
   return (
     <div
