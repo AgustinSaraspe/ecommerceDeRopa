@@ -17,6 +17,11 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         user: payload,
       };
+    case types.LOAD_USER:
+      return {
+        ...state,
+        user: payload,
+      };
     case types.GET_ALL_USERS:
       return {
         ...state,

@@ -1,4 +1,5 @@
 import axios from "axios";
+import User from "../../pages/User";
 export const types = {
   POST_USER: "POST_USER",
   ADD_CART: "ADD_CART",
@@ -17,10 +18,22 @@ export const types = {
   POST_PICTURE: "POST_PICTURE",
   UPDATE_CART: "UPDATE_CART",
   GET_USER_CART: "GET_USER_CART",
-  POST_CART:"POST_CART"
+  POST_CART:"POST_CART",
+  LOAD_USER:"LOAD_USER"
 };
 
 //User
+export const userLoad = (user) =>{
+  return async function (dispatch) {
+    return dispatch({
+      type: types.LOAD_USER,
+      payload: user,
+    });
+  };
+}
+
+
+
 export const postUser = (input) => {
   return async function (dispatch) {
     const user = await axios.post("http://localhost:3001/users", input);
@@ -113,7 +126,7 @@ export const postCart = (id, totalPrice) =>{
     const cart = await axios.post("http://localhost:3001/cart",values);
     return dispatch({ 
       type: types.POST_CART,
-    })
+    }) 
   }
 
 }
