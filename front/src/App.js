@@ -18,12 +18,8 @@ import { useLocalStorage } from "./useLocalStorage/useLocalStorage.js";
 import { useDispatch, useSelector } from "react-redux";
 import User from "./pages/User";
 import Dashboard from "./pages/Dashboard";
-import {
-  getUserCart,
-  postCart,
-  removeAllCart,
-  updateCart,
-} from "./redux/actions/actions";
+=======
+import { getUserCart, postCart, removeAllCart, updateCart, userLoad } from "./redux/actions/actions";
 
 function App() {
   const dispatch = useDispatch();
@@ -53,20 +49,29 @@ function App() {
     setUser(null);
     localStorage.removeItem("user");
   };
+   
+  useEffect( ()=>{
+    if(user !== null){
+      
+      dispatch(userLoad(user));
 
-  useEffect(() => {
-    if (user !== null) {
-      (async () => {
-        let res = await axios(`http://localhost:3001/cart/${user.id}`);
-        dispatch(getUserCart(user.id));
-        console.log("userCart", res.data);
+     (async()=>{
 
-        if (res.data[res.data.length - 1].state === "completed") {
-          console.log("entro");
-          let totalPrice = "0";
+       let res = await axios(`http://localhost:3001/cart/${user.id}`)
+       dispatch(getUserCart(user.id));
+       console.log("userCart",res.data);
+       let totalPrice = "0"
+       
+       if(res.data.length){
+         if(res.data[res.data.length - 1].state === "completed"){
           dispatch(postCart(user.id, totalPrice));
-        }
-      })();
+         }
+       }else{
+        dispatch(postCart(user.id, totalPrice));
+       }
+
+
+     })()
     }
   }, [user]);
 

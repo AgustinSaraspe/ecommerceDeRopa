@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocalStorage } from "../useLocalStorage/useLocalStorage";
+import axios from "axios";
 import "../style/cart.css";
 
 function Cart() {
-  const cart = useSelector((state) => state.cart);
+
+  const user = useSelector((state)=>state.user);
+  const cart = useSelector(state => state.cart);
+  const userCarts = useSelector((state)=>state.userCart);
   const [cartLocalStore, setCartLocalStore] = useLocalStorage("cart", "");
 
   let priceTotal = cart?.reduce((acc, curr) => {
     return Number(acc) + Number(curr.price) * Number(curr.cantidad);
   }, 0);
+ 
+  let lastCart = userCarts[userCarts.length - 1]?.id;
 
-  const handleDeleteCart = (event, id) => {
+  console.log("lastCart", lastCart)
+
+  const handleDeleteCart = (event, id) =>{
     event.preventDefault();
     let newCart = cart.filter((e) => e.id !== id);
     console.log(newCart);
@@ -20,6 +28,25 @@ function Cart() {
   };
 
   useEffect(() => {}, [cartLocalStore]);
+    dispatch(updateCart(newCart))
+  }
+  
+  const handlePayment = async ( ) =>{
+    try{
+      await axios.post("http://localhost:3001/mercadopago/payment",{
+       cartId: lastCart,
+       userId: user.id,
+       cartItems: cart
+      })
+      .then((res)=> window.location.href = res.data.response.body.init_point);
+
+    } catch(error){
+      console.log(error.message)
+    }
+  }
+
+  console.log("user",cart)
+
 
   return (
     <div className="cart-container">
@@ -53,8 +80,14 @@ function Cart() {
             <button>Comprar Carrito</button>
             <button>Cancelar compra</button>
           </div>
-        </div>
       </div>
+   </div>
+        })
+        :
+        <h1>El carro esta vacio</h1>
+      }
+        <h1>{`$${priceTotal}`}</h1>
+        <button onClick={()=> handlePayment()}>Comprar</button>
     </div>
   );
 }
