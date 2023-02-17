@@ -32,6 +32,8 @@ function Cart() {
 
   const handlePayment = async () => {
     try {
+
+    
       await axios
         .post("http://localhost:3001/mercadopago/payment", {
           cartId: lastCart,
@@ -39,8 +41,8 @@ function Cart() {
           cartItems: cart,
         })
         .then(
-          (res) => (window.location.href = res.data.response.body.init_point)
-        );
+          (res) => (window.location.href = res.data.body.init_point)
+        );    
     } catch (error) {
       console.log(error.message);
     }
