@@ -1,10 +1,10 @@
 const axios = require("axios");
 require("dotenv");
 
-export const createPayment = async (cartItems) => {
+const createPayment = async (cartItems) => {
   const url = "https://api.mercadopago.com/checkout/preferences";
   let items = cartItems.map((product) => ({
-    id: product.id,
+    id: product.id.toString(),
     title: product.name,
     unit_price: Number(product.price),
     quantity: Number(product.cantidad) || 1,
@@ -25,8 +25,11 @@ export const createPayment = async (cartItems) => {
       },
     });
 
+    // console.log(payment.data);
     return payment.data;
   } catch (error) {
     throw new Error(error);
   }
 };
+
+module.exports = { createPayment };

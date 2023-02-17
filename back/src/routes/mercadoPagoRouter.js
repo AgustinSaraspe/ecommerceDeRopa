@@ -38,6 +38,7 @@ server.post("/payment", async (req, res, next) => {
   try {
     const { cartItems } = req.body;
     const payment = await createPayment(cartItems);
+    res.json({ payment });
   } catch (error) {
     next(error);
   }

@@ -39,6 +39,7 @@ function Cart() {
 
   const handlePayment = async () => {
     try {
+      console.log("ENTRO AL HANDLE PAYMENT");
       await axios
         .post(
           "http://localhost:3001/mercadopago/payment",
@@ -49,9 +50,10 @@ function Cart() {
           },
           config
         )
-        .then(
-          (res) => (window.location.href = res.data.response.body.init_point)
-        );
+        .then((res) => {
+          const data = res.data;
+          window.location.href = data.payment.init_point;
+        });
     } catch (error) {
       console.log(error.message);
     }
