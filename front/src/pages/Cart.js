@@ -30,14 +30,25 @@ function Cart() {
     dispatch(updateCart(newCart));
   };
 
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+    },
+  };
+
   const handlePayment = async () => {
     try {
       await axios
-        .post("http://localhost:3001/mercadopago/payment", {
-          cartId: lastCart,
-          userId: user.id,
-          cartItems: cart,
-        })
+        .post(
+          "http://localhost:3001/mercadopago/payment",
+          {
+            cartId: lastCart,
+            userId: user.id,
+            cartItems: cart,
+          },
+          config
+        )
         .then(
           (res) => (window.location.href = res.data.response.body.init_point)
         );
@@ -58,7 +69,7 @@ function Cart() {
           {cart?.length ? (
             cart?.map((e) => {
               return (
-                <div className="cart-products">
+                <div className="cart-products" key={e.id}>
                   <div className="cart-product-img">
                     <img src={e.file} alt={e.name} />
                   </div>
