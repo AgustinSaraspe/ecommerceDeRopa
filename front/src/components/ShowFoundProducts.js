@@ -33,6 +33,7 @@ export const ShowFoundProducts = ({ products }) => {
                 <h6>{`Id: ${product.id}`}</h6>
                 <h5>{`${product.name}`}</h5>
                 <h6>{`Precio: $${product.price}`}</h6>
+                <h6>{`Stock: ${product.stock}`}</h6>
               </button>
             );
           })

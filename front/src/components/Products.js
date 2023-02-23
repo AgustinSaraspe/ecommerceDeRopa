@@ -152,6 +152,17 @@ function Products() {
                   ${product.price}
                 </Typography>
                 <Typography
+                  gutterBottom
+                  variant="h6"
+                  component="div"
+                  sx={{
+                    color: "#ddd",
+                    fontWeight: "light",
+                  }}
+                >
+                  Cantidad restante: {product.stock}
+                </Typography>
+                <Typography
                   variant="body2"
                   sx={{
                     color: "#ddd",

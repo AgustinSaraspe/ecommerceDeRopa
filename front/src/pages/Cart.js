@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocalStorage } from "../useLocalStorage/useLocalStorage";
 import axios from "axios";
 import "../style/cart.css";
-import { updateCart } from "../redux/actions/actions";
+import { removeAllCart, updateCart } from "../redux/actions/actions";
 
 function Cart() {
   const user = useSelector((state) => state.user);
@@ -39,27 +39,28 @@ function Cart() {
 
   const handlePayment = async () => {
     try {
-      console.log("ENTRO AL HANDLE PAYMENT");
       await axios
-        .post(
+        .post( 
           "http://localhost:3001/mercadopago/payment",
           {
             cartId: lastCart,
             userId: user.id,
             cartItems: cart,
+            email: user.email,
           },
           config
         )
         .then((res) => {
           const data = res.data;
+          localStorage.setItem("id_payment", data.payment.id);
           window.location.href = data.payment.init_point;
+          dispatch(removeAllCart());
+          //ELIMINAR CARRITO DE LOCALSTORAGE
         });
     } catch (error) {
       console.log(error.message);
     }
   };
-
-  console.log("user", cart);
 
   useEffect(() => {}, [cartLocalStore]);
 
