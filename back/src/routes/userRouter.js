@@ -6,6 +6,7 @@ const {
   updateUser,
   deleteUser,
   logIn,
+  // superUser,
 } = require("../controllers/userControllers.js");
 
 const userRouter = Router();
@@ -46,6 +47,16 @@ userRouter.post("/", async (req, res, next) => {
     next(error);
   }
 });
+
+// userRouter.get("/superUser", async (req, res, next) => {
+//   try {
+//     console.log("entra a ROUTE");
+//     const result = await superUser();
+//     res.status(200).json(result);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 userRouter.post("/logIn", async (req, res, next) => {
   const { email, password } = req.body;

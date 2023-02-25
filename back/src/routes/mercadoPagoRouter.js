@@ -52,17 +52,12 @@ server.get("/payment", async (req, res, next) => {
   let external_reference = req.query.external_reference.toString();
   let cartId = Number(reference[0]);
   let userId = reference[1];
-  console.log("REFERENCE: ", reference);
-  console.log("EXTERNAL REFERENCE: ", external_reference);
-  console.log("cart id: ", cartId);
-  console.log("user id: ", userId);
-
   try {
     let cart = await Cart.findByPk(cartId);
     setTimeout(async () => {
       let updateState = "cancelled";
       let factura = await comprobante(external_reference);
-      console.log("Factura: ", factura);
+      console.log("FACTURA: ", factura);
       let carrito = factura.cart?.map((el) => {
         return {
           quantity: Number(el.quantity),
@@ -81,10 +76,15 @@ server.get("/payment", async (req, res, next) => {
           }
           await product.save();
           await Detail.create({
-            quantity: Number(carrito[i].price) * Number(carrito[i].quantity),
-            CartOrderN: Number(cartId),
+            Total: parseFloat(carrito[i].price),
+            Quantity: Number(carrito[i].quantity),
             ProductId: Number(carrito[i].ProductId),
-            UserEmail: userId,
+            CartId: Number(cartId),
+          });
+          await Voucher.create({
+            wayToPay: factura.wayToPay,
+            price: parseFloat(factura.totalUltimaCompra),
+            cart: Number(cartId),
           });
         }
       }
@@ -123,9 +123,15 @@ const comprobante = async (id) => {
       results[results.length - 1].transaction_details.total_paid_amount;
     let cart = results[results.length - 1].additional_info.items;
     let status = results[results.length - 1].status;
-    return { totalUltimaCompra, cart, status };
+    let wayToPay = results[results.length - 1].payment_type.id;
+    return { totalUltimaCompra, cart, status, wayToPay };
   } catch (error) {
-    return { totalUltimaCompra: 0, cart: [], status: "rejected" };
+    return {
+      totalUltimaCompra: 0,
+      cart: [],
+      status: "rejected",
+      wayToPay: "none",
+    };
   }
 };
 

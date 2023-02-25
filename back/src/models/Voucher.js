@@ -1,18 +1,19 @@
-const {DataTypes} = require("sequelize");
+const { DataTypes } = require("sequelize");
 
-
-module.exports = (sequelize) =>{
+module.exports = (sequelize) => {
   sequelize.define("Voucher", {
-    date:{
+    date: {
       type: DataTypes.DATEONLY,
-      defaultValue: DataTypes.NOW    
+      defaultValue: DataTypes.NOW,
     },
     wayToPay: {
-     type: DataTypes.STRING
-    }, 
+      type: DataTypes.STRING,
+    },
     price: {
-        type: DataTypes.FLOAT
-    }
-  }
-  )
-}
+      type: DataTypes.FLOAT,
+    },
+    cart: {
+      type: DataTypes.INTEGER,
+    },
+  });
+};

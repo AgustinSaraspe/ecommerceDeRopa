@@ -66,6 +66,34 @@ const logIn = async (email, password) => {
   }
 };
 
+// const superUser = async () => {
+//   try {
+//     console.log("entra al controlador");
+//     let newPassword = bycript.hashSync(process.env.SUPERUSER_PASSWORD, 10);
+
+//     const [result, created] = await User.findOrCreate({
+//       where: {
+//         email: "admin",
+//       },
+//       defaults: {
+//         name: "Admin",
+//         password: newPassword,
+//         admin: true,
+//         state: true,
+//       },
+//     });
+
+//     let token = jwt.sign({ user: result }, "secret_word", { expiresIn: "24h" });
+
+//     return {
+//       user: result,
+//       token: token,
+//     };
+//   } catch (error) {
+//     throw new Error(error);
+//   }
+// };
+
 //GET
 const getUser = async (email) => {
   const user = await User.findByPk(email);
@@ -109,4 +137,5 @@ module.exports = {
   updateUser,
   deleteUser,
   logIn,
+  // superUser,
 };
