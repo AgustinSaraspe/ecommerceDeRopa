@@ -98,7 +98,7 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
       };
-    case types.GET_USER_DETAIL:
+    case types.GET_DETAIL:
       return {
         ...state,
         userDetail: payload,

@@ -20,7 +20,7 @@ export const types = {
   GET_USER_CART: "GET_USER_CART",
   POST_CART: "POST_CART",
   LOAD_USER: "LOAD_USER",
-  GET_USER_DETAIL: "GET_USER_DETAIL",
+  GET_DETAIL: "GET_DETAIL",
   GET_VOUCHER: "GET_VOUCHER",
 };
 
@@ -197,12 +197,12 @@ export const postPicture = (values) => {
 
 // DETAIL
 
-export const getUserDetail = (userId) => {
+export const getDetail = (cartId) => {
   return async function (dispatch) {
     const userDetail = await axios.get(
-      `http://localhost:3001/detail/userDetail/${userId}`
+      `http://localhost:3001/detail/${cartId}`
     );
-    return dispatch({ type: types.GET_USER_DETAIL, payload: userDetail.data });
+    return dispatch({ type: types.GET_DETAIL, payload: userDetail.data });
   };
 };
 

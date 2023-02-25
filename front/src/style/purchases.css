@@ -2,18 +2,18 @@
   display: flex;
   flex-direction: column;
   background-color: #111;
-  margin: .5rem;
   border: 1px solid #ddd;
   padding: .5rem;
   color: #fff;
   font-family: verdana;
 }
 
-.purchases-container h1{
+.purchases-container h2{
   text-align: center;
+  margin: auto;
 }
 
-.purchases-container div:first-of-type{
+.purchase-wrapper{
   margin: 1rem;
   border: 1px solid #ddd;
 }
@@ -37,4 +37,43 @@
   flex: 1;
   border: none;
   cursor: pointer;
+}
+
+.detail-container{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 3;
+  margin: 0 auto;
+  width: 99%;
+  height: auto;
+  background-color: #111;
+  color: #fff;
+  border: 1px solid #ddd;
+}
+
+.detail-container nav{
+  display: flex;
+}
+
+.detail-container nav button{
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+
+.detail-wrapper{
+  display: flex;
+  margin: .5rem 1rem;
+  border: 1px solid #777;
+}
+
+.detail-wrapper h5, .detail-wrapper h4{
+  flex: 1;
+  align-self: center;
+  text-align: center;
 }

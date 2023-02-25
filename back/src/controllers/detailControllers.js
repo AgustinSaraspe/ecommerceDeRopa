@@ -9,7 +9,7 @@ const getDetailCart = async (idCart) => {
   if (!idCart) throw new Error("El id cart es requerido");
   const detail = await Detail.findAll({
     where: {
-      idCart: idCart,
+      CartId: idCart,
     },
     include: [{ model: Product }],
   });
