@@ -21,6 +21,7 @@ export const types = {
   POST_CART: "POST_CART",
   LOAD_USER: "LOAD_USER",
   GET_USER_DETAIL: "GET_USER_DETAIL",
+  GET_VOUCHER: "GET_VOUCHER",
 };
 
 //User
@@ -202,5 +203,16 @@ export const getUserDetail = (userId) => {
       `http://localhost:3001/detail/userDetail/${userId}`
     );
     return dispatch({ type: types.GET_USER_DETAIL, payload: userDetail.data });
+  };
+};
+
+// VOUCHER
+
+export const getVoucher = (userId) => {
+  return async function (dispatch) {
+    const userVoucher = await axios.get(
+      `http://localhost:3001/voucher/${userId}`
+    );
+    return dispatch({ type: types.GET_VOUCHER, payload: userVoucher.data });
   };
 };

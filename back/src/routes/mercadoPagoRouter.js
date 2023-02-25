@@ -1,6 +1,6 @@
 const server = require("express").Router();
 require("dotenv").config();
-const { Cart, Product, Detail } = require("../db.js");
+const { Cart, Product, Detail, Voucher } = require("../db.js");
 const mercadopago = require("mercadopago");
 const {
   createPayment,
@@ -84,7 +84,8 @@ server.get("/payment", async (req, res, next) => {
           await Voucher.create({
             wayToPay: factura.wayToPay,
             price: parseFloat(factura.totalUltimaCompra),
-            cart: Number(cartId),
+            UserId: Number(userId),
+            CartId: Number(cartId),
           });
         }
       }
@@ -123,7 +124,7 @@ const comprobante = async (id) => {
       results[results.length - 1].transaction_details.total_paid_amount;
     let cart = results[results.length - 1].additional_info.items;
     let status = results[results.length - 1].status;
-    let wayToPay = results[results.length - 1].payment_type.id;
+    let wayToPay = results[results.length - 1].payment_type_id;
     return { totalUltimaCompra, cart, status, wayToPay };
   } catch (error) {
     return {

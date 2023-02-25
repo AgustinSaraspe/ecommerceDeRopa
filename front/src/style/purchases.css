@@ -6,4 +6,35 @@
   border: 1px solid #ddd;
   padding: .5rem;
   color: #fff;
+  font-family: verdana;
+}
+
+.purchases-container h1{
+  text-align: center;
+}
+
+.purchases-container div:first-of-type{
+  margin: 1rem;
+  border: 1px solid #ddd;
+}
+
+.purchase-wrapper li{
+  display: flex;
+  align-self: center;
+  padding: 1rem;
+}
+
+.purchase-wrapper ul li> *{
+  font-weight: 300;
+  align-self: center;
+  flex: 4;
+}
+
+.purchase-wrapper ul button{
+  background-color: transparent;
+  color: #fff;
+  font-size: 14px;
+  flex: 1;
+  border: none;
+  cursor: pointer;
 }

@@ -9,6 +9,7 @@ const initialState = {
   products: [],
   userCart: [],
   userDetail: [],
+  userVoucher: [],
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -101,6 +102,11 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         userDetail: payload,
+      };
+    case types.GET_VOUCHER:
+      return {
+        ...state,
+        userVoucher: payload,
       };
     default:
       return state;

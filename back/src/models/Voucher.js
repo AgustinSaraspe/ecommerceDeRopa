@@ -12,8 +12,5 @@ module.exports = (sequelize) => {
     price: {
       type: DataTypes.FLOAT,
     },
-    cart: {
-      type: DataTypes.INTEGER,
-    },
   });
 };

@@ -1,57 +1,52 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetail } from "../redux/actions/actions";
+import { getUserDetail, getVoucher } from "../redux/actions/actions";
 import "../style/purchases.css";
 
 const Purchases = () => {
   const dispatch = useDispatch();
-  const compras = useSelector((state) => state.userDetail);
+  const compras = useSelector((state) => state.userVoucher);
   const userId = JSON.parse(localStorage.getItem("user")).id;
 
   useEffect(() => {
-    dispatch(getUserDetail(userId));
+    if (!compras.length) dispatch(getVoucher(userId));
     console.log(compras);
-  }, []);
+  }, [compras]);
 
   return (
     <div className="purchases-container">
       <h1>Mis Compras</h1>
-      <div>
+      <div className="purchase-wrapper">
         <ul>
           {!compras ? (
-            <h3>Cargando...</h3>
+            <li>
+              <h5>Cargando...</h5>
+            </li>
           ) : (
             compras?.map((compra) => {
               return (
-                <div
-                  style={{
-                    display: "flex",
-                  }}
-                >
-                  <h3>Fecha: {compra.createdAt}</h3>
-                  <h3>Producto:</h3>
-                  <div
-                    style={{
-                      width: "80px",
-                    }}
-                  >
-                    <img
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                      }}
-                      src={compra.Product.file}
-                    />
-                  </div>
-                  <h4>{compra.Product.name}</h4>
-                  <h4>{compra.Product.price}</h4>
-                </div>
+                <li>
+                  <h5>
+                    Id: <b>{compra.id}</b>
+                  </h5>
+                  <h5>
+                    Fecha: <b>{compra.date}</b>
+                  </h5>
+                  <h5>
+                    Forma de pago: <b>{compra.wayToPay}</b>
+                  </h5>
+                  <h3>
+                    Total: <b>${compra.price}</b>
+                  </h3>
+                  <button onClick={""}>
+                    <i className="fa-solid fa-eye"></i>
+                  </button>
+                </li>
               );
             })
           )}
         </ul>
       </div>
-      <section></section>
     </div>
   );
 };

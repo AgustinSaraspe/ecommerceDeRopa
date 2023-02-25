@@ -152,7 +152,15 @@ function App() {
                         Dashboard
                       </button>
                     ) : (
-                      ""
+                      <button
+                        onClick={() => {
+                          window.location.replace(
+                            "http://localhost:3000/purchases"
+                          );
+                        }}
+                      >
+                        Mis Compras
+                      </button>
                     )}
                     <button
                       onClick={() => {
