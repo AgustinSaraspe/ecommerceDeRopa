@@ -39,6 +39,8 @@ function Cart() {
 
   const handlePayment = async () => {
     try {
+
+    
       await axios
         .post( 
           "http://localhost:3001/mercadopago/payment",

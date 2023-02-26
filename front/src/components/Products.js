@@ -54,13 +54,16 @@ function Products() {
             e.cantidad = cantidadActual + 1;
           }
         });
+           
+        setCartLocalStore(cart)
 
-        setCartLocalStore(cart);
       } else {
         let newProduct = {
           ...product,
           cantidad: 1,
         };
+        
+        setCartLocalStore(cart)
         dispatch(addProductCart(addProductCart(newProduct)));
       }
     } else {
@@ -69,11 +72,14 @@ function Products() {
         cantidad: 1,
       };
 
+      setCartLocalStore(cart)
       dispatch(addProductCart(addProductCart(newProduct)));
     }
   };
 
-  console.log("CART: ", cart);
+  console.log("CART: ", cartLocalStore);
+  console.log("cart", cart);
+
 
   //Uso dos useffect para que no se haga un infinite loop
   useEffect(() => {
@@ -90,7 +96,6 @@ function Products() {
 
   useEffect(() => {
     if (cart) {
-      console.log("cart", cart);
     }
   }, [cartLocalStore]);
 

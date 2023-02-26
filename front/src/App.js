@@ -38,7 +38,10 @@ function App() {
   // const [quantity, setQuantity] = useState(null);
   // const [cart, setCart] = useState(null);
   let stringiUser = localStorage.getItem("user");
-  let cart = JSON.parse(localStorage.getItem("cart"));
+  let cart = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : setCartLocalStore([]);
+  
 
   const totalCart = () => {
     let total = 0;
@@ -103,9 +106,12 @@ function App() {
 
   useEffect(() => {}, [cart]);
 
+
   // axios
   //   .get("http://localhost:3001/users/superUser")
   //   .then((res) => console.log(res));
+=======
+  totalCart();
 
   return (
     <Router>
