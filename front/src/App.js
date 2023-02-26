@@ -25,6 +25,7 @@ import {
   updateCart,
   userLoad,
 } from "./redux/actions/actions";
+import Purchases from "./pages/Purchases";
 
 function App() {
   const dispatch = useDispatch();
@@ -105,6 +106,11 @@ function App() {
 
   useEffect(() => {}, [cart]);
 
+
+  // axios
+  //   .get("http://localhost:3001/users/superUser")
+  //   .then((res) => console.log(res));
+=======
   totalCart();
 
   return (
@@ -152,7 +158,15 @@ function App() {
                         Dashboard
                       </button>
                     ) : (
-                      ""
+                      <button
+                        onClick={() => {
+                          window.location.replace(
+                            "http://localhost:3000/purchases"
+                          );
+                        }}
+                      >
+                        Mis Compras
+                      </button>
                     )}
                     <button
                       onClick={() => {
@@ -192,6 +206,7 @@ function App() {
             <Route path="/user" element={<User />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/about" element={<About />} />
+            <Route path="/purchases" element={<Purchases />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

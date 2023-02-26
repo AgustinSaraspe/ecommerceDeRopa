@@ -18,21 +18,21 @@ export const types = {
   POST_PICTURE: "POST_PICTURE",
   UPDATE_CART: "UPDATE_CART",
   GET_USER_CART: "GET_USER_CART",
-  POST_CART:"POST_CART",
-  LOAD_USER:"LOAD_USER"
+  POST_CART: "POST_CART",
+  LOAD_USER: "LOAD_USER",
+  GET_DETAIL: "GET_DETAIL",
+  GET_VOUCHER: "GET_VOUCHER",
 };
 
 //User
-export const userLoad = (user) =>{
+export const userLoad = (user) => {
   return async function (dispatch) {
     return dispatch({
       type: types.LOAD_USER,
       payload: user,
     });
   };
-}
-
-
+};
 
 export const postUser = (input) => {
   return async function (dispatch) {
@@ -117,20 +117,18 @@ export const updateCart = (value) => {
   };
 };
 
-export const postCart = (id, totalPrice) =>{
-  return async function(dispatch){
+export const postCart = (id, totalPrice) => {
+  return async function (dispatch) {
     let values = {
       idUser: id,
-      totalPrice: totalPrice
-    }
-    const cart = await axios.post("http://localhost:3001/cart",values);
-    return dispatch({ 
+      totalPrice: totalPrice,
+    };
+    const cart = await axios.post("http://localhost:3001/cart", values);
+    return dispatch({
       type: types.POST_CART,
-    }) 
-  }
-
-}
-
+    });
+  };
+};
 
 export const getUserCart = (id) => {
   return async function (dispatch) {
@@ -138,7 +136,6 @@ export const getUserCart = (id) => {
     return dispatch({ type: types.GET_USER_CART, payload: userCart.data });
   };
 };
-
 
 //Product
 export const getAllProducts = () => {
@@ -195,5 +192,27 @@ export const postPicture = (values) => {
     return dispatch({
       type: types.POST_PICTURE,
     });
+  };
+};
+
+// DETAIL
+
+export const getDetail = (cartId) => {
+  return async function (dispatch) {
+    const userDetail = await axios.get(
+      `http://localhost:3001/detail/${cartId}`
+    );
+    return dispatch({ type: types.GET_DETAIL, payload: userDetail.data });
+  };
+};
+
+// VOUCHER
+
+export const getVoucher = (userId) => {
+  return async function (dispatch) {
+    const userVoucher = await axios.get(
+      `http://localhost:3001/voucher/${userId}`
+    );
+    return dispatch({ type: types.GET_VOUCHER, payload: userVoucher.data });
   };
 };

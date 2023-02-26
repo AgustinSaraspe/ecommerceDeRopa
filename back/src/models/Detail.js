@@ -1,15 +1,18 @@
-const {DataTypes} = require("sequelize");
+const { DataTypes } = require("sequelize");
 
-
-module.exports = (sequelize) =>{
+module.exports = (sequelize) => {
   sequelize.define("Detail", {
-    quantity:{
-        type: DataTypes.INTEGER,
-        allowNull: false
+    Total: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
     },
-    price: {
-        type: DataTypes.FLOAT
-    }   
-  }
-  )
-}
+    Quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    ProductId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  });
+};

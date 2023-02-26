@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocalStorage } from "../useLocalStorage/useLocalStorage";
 import axios from "axios";
 import "../style/cart.css";
-import { updateCart } from "../redux/actions/actions";
+import { removeAllCart, updateCart } from "../redux/actions/actions";
 
 function Cart() {
   const user = useSelector((state) => state.user);
@@ -30,25 +30,39 @@ function Cart() {
     dispatch(updateCart(newCart));
   };
 
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+    },
+  };
+
   const handlePayment = async () => {
     try {
 
     
       await axios
-        .post("http://localhost:3001/mercadopago/payment", {
-          cartId: lastCart,
-          userId: user.id,
-          cartItems: cart,
-        })
-        .then(
-          (res) => (window.location.href = res.data.body.init_point)
-        );    
+        .post( 
+          "http://localhost:3001/mercadopago/payment",
+          {
+            cartId: lastCart,
+            userId: user.id,
+            cartItems: cart,
+            email: user.email,
+          },
+          config
+        )
+        .then((res) => {
+          const data = res.data;
+          localStorage.setItem("id_payment", data.payment.id);
+          window.location.href = data.payment.init_point;
+          dispatch(removeAllCart());
+          //ELIMINAR CARRITO DE LOCALSTORAGE
+        });
     } catch (error) {
       console.log(error.message);
     }
   };
-
-  console.log("user", cart);
 
   useEffect(() => {}, [cartLocalStore]);
 
@@ -60,7 +74,7 @@ function Cart() {
           {cart?.length ? (
             cart?.map((e) => {
               return (
-                <div className="cart-products">
+                <div className="cart-products" key={e.id}>
                   <div className="cart-product-img">
                     <img src={e.file} alt={e.name} />
                   </div>

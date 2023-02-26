@@ -165,6 +165,7 @@ const ShowFoundProducts = ({ products }) => {
                 </div>
                 <h5>{`${product.name}`}</h5>
                 <h6>{`Precio: $${product.price}`}</h6>
+                <h6>{`${product.stock}`}</h6>
                 <i className="fa-solid fa-pencil"></i>
               </button>
             );
