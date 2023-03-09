@@ -7,6 +7,7 @@ import {
   postProduct,
 } from "../../redux/actions/actions";
 import { Box } from "@mui/system";
+import "../../style/dashboard.css";
 
 export const DeleteProduct = () => {
   const dispatch = useDispatch();
@@ -180,28 +181,13 @@ const ShowFoundProducts = ({ products, setOpen, setMessage }) => {
 
   return (
     <div>
-      <ul
-        style={{
-          paddingInlineStart: 0,
-        }}
-      >
+      <ul className="productWrapper">
         {products ? (
           products.map((product) => {
             return (
               <button
                 key={product.id}
-                style={{
-                  display: "flex",
-                  width: "60%",
-                  alignItems: "center",
-                  fontFamily: "verdana",
-                  border: "1px solid #555",
-                  padding: "1rem",
-                  margin: ".5rem auto",
-                  backgroundColor: "transparent",
-                  color: "#ddd",
-                  justifyContent: "space-between",
-                }}
+                className="productList"
                 onClick={() => setSelection(product)}
               >
                 <h6>{`Id: ${product.id}`}</h6>

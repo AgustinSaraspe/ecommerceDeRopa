@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { postUser } from "../../redux/actions/actions";
+import "../../style/dashboard.css";
 
 export const NewUser = () => {
   const dispatch = useDispatch();
@@ -94,7 +95,7 @@ export const NewUser = () => {
 
   return (
     <div>
-      <div className="productMenu" style={formStyle}>
+      <div className="productMenu">
         <h2>Nuevo Usuario</h2>
         <label>Nombre</label>
         <input name="name" onChange={handleChange} value={input.name} />

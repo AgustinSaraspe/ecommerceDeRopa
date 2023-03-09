@@ -39,10 +39,8 @@ function Cart() {
 
   const handlePayment = async () => {
     try {
-
-    
       await axios
-        .post( 
+        .post(
           "http://localhost:3001/mercadopago/payment",
           {
             cartId: lastCart,
@@ -69,7 +67,7 @@ function Cart() {
   return (
     <div className="cart-container">
       <h1>Carrito</h1>
-      <div>
+      <div className="cart-wrapper">
         <div className="cart-products-container">
           {cart?.length ? (
             cart?.map((e) => {

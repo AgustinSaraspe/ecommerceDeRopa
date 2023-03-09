@@ -39,7 +39,8 @@
   margin-top: 1rem;
   border-left: 4px solid salmon;
   background-color: black;
-  padding: 1rem 200px;
+  padding: 2rem auto;
+  width: 100%;
   transition: .3s;
 }
 .modalButton:first-of-type:hover{
@@ -49,9 +50,22 @@
 
 /* ---------------- */
 
-.modalBoxUser{
+.modalBoxUser, .modalBox{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   padding: 1rem;
+  background-color: #111111ee;
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: auto;
+  border: 2px solid #000;
+  box-shadow: 24;
+  padding: 10;
+  display: flex;
+  flex-direction: column;
 }
 .modalBoxUser h1{
   color: white;
@@ -101,4 +115,16 @@
 .modalButtonUser:first-of-type:hover{
   background-color: #eee;
   color: black;
+}
+
+@media (max-width: 500px) {
+  .modalBoxUser, .modalBox{
+    width: 90%;
+    height: auto;
+  }
+
+  .modalButtonUser:first-of-type, .modalButton:first-of-type{
+    padding: 1rem 0;
+    width: 100%;
+  }
 }

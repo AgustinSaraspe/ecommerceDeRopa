@@ -54,16 +54,15 @@ function Products() {
             e.cantidad = cantidadActual + 1;
           }
         });
-           
-        setCartLocalStore(cart)
 
+        setCartLocalStore(cart);
       } else {
         let newProduct = {
           ...product,
           cantidad: 1,
         };
-        
-        setCartLocalStore(cart)
+
+        setCartLocalStore(cart);
         dispatch(addProductCart(addProductCart(newProduct)));
       }
     } else {
@@ -72,14 +71,13 @@ function Products() {
         cantidad: 1,
       };
 
-      setCartLocalStore(cart)
+      setCartLocalStore(cart);
       dispatch(addProductCart(addProductCart(newProduct)));
     }
   };
 
   console.log("CART: ", cartLocalStore);
   console.log("cart", cart);
-
 
   //Uso dos useffect para que no se haga un infinite loop
   useEffect(() => {
@@ -100,33 +98,30 @@ function Products() {
   }, [cartLocalStore]);
 
   return (
-    <div
-      style={
-        loading
-          ? {
-              margin: ".5rem",
-              backgroundColor: "#111111ee",
-            }
-          : {
-              backgroundColor: "#111111ee",
-              margin: ".5rem",
-              display: "grid",
-              gridTemplateColumns: "repeat(4,minmax(200px, 1fr))",
-            }
-      }
-    >
+    <div className="products-container">
       {!loading ? (
         products.map((product) => {
           return (
             <Card
-              sx={{
-                maxWidth: 320,
-                margin: "1rem",
-                backgroundColor: "#111",
-                border: "1px solid #ddd",
-                color: "#fff",
-                cursor: "pointer",
-              }}
+              sx={
+                window.matchMedia("(max-width: 500px)").matches
+                  ? {
+                      maxWidth: "100%",
+                      margin: ".1rem",
+                      backgroundColor: "#111",
+                      border: "1px solid #ddd",
+                      color: "#fff",
+                      cursor: "pointer",
+                    }
+                  : {
+                      maxWidth: 320,
+                      margin: "1rem",
+                      backgroundColor: "#111",
+                      border: "1px solid #ddd",
+                      color: "#fff",
+                      cursor: "pointer",
+                    }
+              }
               key={product.id}
             >
               <CardMedia
@@ -178,9 +173,16 @@ function Products() {
                 </Typography>
               </CardContent>
               <CardActions
-                sx={{
-                  display: "flex",
-                }}
+                sx={
+                  window.matchMedia("(max-width: 500px)").matches
+                    ? {
+                        display: "flex",
+                        flexDirection: "column",
+                      }
+                    : {
+                        display: "flex",
+                      }
+                }
               >
                 <button
                   className="buyProductBtn"

@@ -1,3 +1,10 @@
+.products-container{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: #111;
+  margin: .2rem;
+}
+
 button:last-of-type{
   transition: .4s;
 }
@@ -38,4 +45,29 @@ button:last-of-type:hover{
   background-color: #111;
   border: 1px solid #eee;
   color: #eee;
+}
+
+@media (max-width: 500px) {
+  .products-container{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    justify-content: center;
+    background-color: #111;
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  body{
+    width: 100%;
+  }
+
+  .buyProductBtn{
+    flex: 1;
+    width: 100%;
+  }
+  .cartProductBtn{
+    flex: 1;
+    width: 100%;
+  }
 }
