@@ -454,4 +454,7 @@ footer div i{
     border: none;
     transition: .3s;
   }
+  .footer-header div:nth-of-type(2){
+    flex-direction: column;
+  }
 }
