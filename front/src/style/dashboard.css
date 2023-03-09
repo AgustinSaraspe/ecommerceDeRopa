@@ -110,3 +110,116 @@
   background-color: transparent;
   color: #777;
 }
+
+.productMenu{
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 20%;
+}
+
+.productWrapper{
+  padding-inline-start: 0;
+}
+
+.productList{
+  display: flex;
+  width: 80%;
+  align-items: center;
+  font-family: verdana;
+  border: 1px solid #555;
+  padding: 1rem;
+  margin: .5rem auto;
+  background-color: transparent;
+  color: #ddd;
+  justify-content: space-between;
+}
+
+.updateProductList{
+  display: flex;
+  width: 80%;
+  align-items: center;
+  font-family: verdana;
+  border: 1px solid #555;
+  padding: 1rem;
+  margin: .5rem auto;
+  background-color: transparent;
+  color: #ddd;
+  justify-content: space-between;
+}
+
+.productListImage{
+  width: 100px;
+  height: auto;
+  border: 1px solid #ddd;
+}
+
+.productListImage img{
+  width: 100%;
+  height: auto;
+}
+
+/* USERS */
+
+.userList{
+  display: flex;
+  width: 80%;
+  align-items: center;
+  font-family: verdana;
+  border: 1px solid #555;
+  padding: 2rem;
+  margin: .5rem auto;
+  background-color: transparent;
+  color: #ddd;
+  justify-content: space-between;
+  font-size: 16px;
+  cursor: default;
+}
+
+@media (max-width: 500px) {
+  .productMenu{
+    margin: 0;
+  }
+  .productMenu input{
+    width: 90%;
+  }
+  .productMenu select{
+    width: 100%;
+  }
+  .dashboardBody{
+    width: 60%;
+  }
+  .dashboardContainer nav{
+    width: 40%;
+  }
+  .productList{
+    width: 95%;
+  }
+
+  .updateProductList{
+    width: 95%;
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+  }
+  .updateProductList h6:first-of-type{
+    display: none;
+  }
+  .updateProductList h5{
+    font-size: 15px;
+  }
+  .updateProductList h6{
+    font-size: 12px;
+  }
+  .updateProductList i{
+    font-size: 15px;
+    padding: .5rem;
+  }
+
+  /*  */
+
+  .userList{
+    flex-direction: column;
+    width: 95%;
+    padding: .5rem;
+  }
+}

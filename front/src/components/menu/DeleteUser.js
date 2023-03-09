@@ -6,6 +6,7 @@ import {
   getAllUsers,
   updateUser,
 } from "../../redux/actions/actions";
+import "../../style/dashboard.css";
 
 export const DeleteUser = () => {
   const dispatch = useDispatch();
@@ -113,29 +114,13 @@ const ShowFoundProducts = ({ users }) => {
 
   return (
     <div>
-      <ul
-        style={{
-          paddingInlineStart: 0,
-        }}
-      >
+      <ul className="productWrapper">
         {users ? (
           users.map((user) => {
             return (
               <button
                 key={user.id}
-                style={{
-                  display: "flex",
-                  width: "80%",
-                  alignItems: "center",
-                  fontFamily: "verdana",
-                  border: "1px solid #555",
-                  padding: "2rem",
-                  margin: ".5rem auto",
-                  backgroundColor: "transparent",
-                  color: "#ddd",
-                  justifyContent: "space-between",
-                  fontSize: "16px",
-                }}
+                className="userList"
                 onClick={() => setSelection(user)}
               >
                 <h6>{`Id: ${user.id}`}</h6>
@@ -199,26 +184,12 @@ const UpdateForm = ({ user, setter }) => {
     errorInput: "Por favor rellene todos los campos",
   };
 
-  const boxStyle = {
-    backgroundColor: "#111111ee",
-    fontSize: "12px",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "40%",
-    height: "50%",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 10,
-    display: "flex",
-    flexDirection: "column",
-  };
+  const boxStyle = {};
 
   return (
     <>
       <Modal open={user !== undefined}>
-        <Box style={boxStyle} className="modalBoxUser">
+        <Box className="modalBoxUser">
           <h1>Eliminar Usuario</h1>
           {user ? (
             <h2

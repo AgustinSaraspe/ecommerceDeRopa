@@ -12,6 +12,7 @@ import {
   postPicture,
 } from "../../redux/actions/actions";
 import axios from "axios";
+import "../../style/dashboard.css";
 
 export const NewProduct = () => {
   const [input, setInput] = useState({
@@ -23,11 +24,7 @@ export const NewProduct = () => {
   });
 
   const dispatch = useDispatch();
-  const formStyle = {
-    display: "flex",
-    flexDirection: "column",
-    margin: "2rem 20%",
-  };
+  const formStyle = {};
 
   const products = useSelector((state) => state.products);
 
@@ -136,7 +133,7 @@ export const NewProduct = () => {
 
   return (
     <div>
-      <div className="productMenu" style={formStyle}>
+      <div className="productMenu">
         <h2>Nuevo Producto</h2>
         <label>Nombre</label>
         <input name="name" onChange={handleChange} value={input.name} />

@@ -8,6 +8,10 @@ function Dashboard() {
   const [products, setProducts] = useState(false);
   const [menu, setMenu] = useState(menuTypes.NEW_PRODUCT);
 
+  if (!JSON.parse(localStorage.getItem("user"))?.admin) {
+    window.location.replace("http://localhost:3000");
+  }
+
   return (
     <div className="dashboardContainer">
       <nav>

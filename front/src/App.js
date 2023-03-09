@@ -33,15 +33,15 @@ function App() {
   const userCart = useSelector((state) => state.userCart);
 
   const [cartLocalStore, setCartLocalStore] = useLocalStorage("cart", "");
+  const [menu, setMenu] = useState(false);
 
   const [user, setUser] = useState(null);
   // const [quantity, setQuantity] = useState(null);
   // const [cart, setCart] = useState(null);
   let stringiUser = localStorage.getItem("user");
   let cart = localStorage.getItem("cart")
-  ? JSON.parse(localStorage.getItem("cart"))
-  : setCartLocalStore([]);
-  
+    ? JSON.parse(localStorage.getItem("cart"))
+    : setCartLocalStore([]);
 
   const totalCart = () => {
     let total = 0;
@@ -80,12 +80,20 @@ function App() {
     }
   }, [user]);
 
+  useEffect(() => {
+    setMenu(false);
+  }, []);
+
   const handleDeleteCart = (event, id) => {
     event.preventDefault();
     let newCart = cart.filter((e) => e.id !== id);
     console.log(newCart);
     setCartLocalStore(newCart);
     dispatch(updateCart(newCart));
+  };
+
+  const handleMenu = () => {
+    setMenu(!menu);
   };
 
   console.log("cart", cart);
@@ -106,11 +114,9 @@ function App() {
 
   useEffect(() => {}, [cart]);
 
-
   // axios
   //   .get("http://localhost:3001/users/superUser")
   //   .then((res) => console.log(res));
-=======
   totalCart();
 
   return (
@@ -120,10 +126,21 @@ function App() {
           <div className="nav-left">
             <Link to="/">Colibri</Link>
           </div>
+          <div className="nav-menu">
+            <button onClick={handleMenu}>
+              <i className="fa-solid fa-bars"></i>
+            </button>
+          </div>
           <div className="nav-right">
-            <Link to="/">Inicio</Link>
-            <Link to="/store">Productos</Link>
-            <Link to="/about">Contacto</Link>
+            <Link to="/" className="nav-right-button">
+              Inicio
+            </Link>
+            <Link to="/store" className="nav-right-button">
+              Productos
+            </Link>
+            <Link to="/about" className="nav-right-button">
+              Contacto
+            </Link>
             {user !== null ? (
               <>
                 {!user.admin ? (
@@ -196,6 +213,96 @@ function App() {
             )}
           </div>
         </nav>
+        <div
+          className="dropdown-menu"
+          style={
+            menu
+              ? {
+                  display: "flex",
+                }
+              : {
+                  display: "none",
+                }
+          }
+        >
+          <ul>
+            <Link to="/" className="nav-right-button">
+              Inicio
+            </Link>
+            <Link to="/store" className="nav-right-button">
+              Productos
+            </Link>
+            <Link to="/about" className="nav-right-button">
+              Contacto
+            </Link>
+            {user !== null ? (
+              <>
+                {!user.admin ? (
+                  <div className="dropdown-cart">
+                    <Link to="/cart" className="cart-btn">
+                      <i className="fa-solid fa-cart-shopping"></i>
+                    </Link>
+                  </div>
+                ) : (
+                  ""
+                )}
+                <div className="dropdown-user">
+                  <Link
+                    to="/user"
+                    style={{
+                      margin: "0",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Avatar sx={{ margin: "auto" }}>
+                      {user.name.charAt(0)}
+                    </Avatar>
+                  </Link>
+                </div>
+                {user.admin ? (
+                  <button
+                    className="mobile-button"
+                    onClick={() => {
+                      window.location.replace(
+                        "http://localhost:3000/dashboard"
+                      );
+                    }}
+                  >
+                    Dashboard
+                  </button>
+                ) : (
+                  <button
+                    className="mobile-button"
+                    onClick={() => {
+                      window.location.replace(
+                        "http://localhost:3000/purchases"
+                      );
+                    }}
+                  >
+                    Mis Compras
+                  </button>
+                )}
+                <button
+                  className="mobile-button"
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                >
+                  Cerrar Sesión
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="log-button">
+                  <Link to="/login">Login</Link>
+                </button>
+                <button className="log-button">
+                  <Link to="/signup">Sign Up</Link>
+                </button>
+              </>
+            )}
+          </ul>
+        </div>
         <div className="body">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -212,12 +319,6 @@ function App() {
           </Routes>
         </div>
         <footer>
-          <div className="footer-devs">
-            <h5>Thiago Sosa Argañaraz</h5>
-            <i className="fa-brands fa-github"></i>
-            <i className="fa-solid fa-envelope"></i>
-            <i className="fa-brands fa-linkedin"></i>
-          </div>
           <div className="footer-header">
             <div>
               <h2>Colibri</h2>
@@ -228,12 +329,6 @@ function App() {
               <i className="fa-brands fa-whatsapp"></i>
               <h5>+54 3863 123456</h5>
             </div>
-          </div>
-          <div className="footer-devs">
-            <h5>Agustin Saraspe</h5>
-            <i className="fa-brands fa-github"></i>
-            <i className="fa-solid fa-envelope"></i>
-            <i className="fa-brands fa-linkedin"></i>
           </div>
         </footer>
       </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../../redux/actions/actions";
+import "../../style/dashboard.css";
 
 export const ListUsers = () => {
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ export const ListUsers = () => {
   return (
     <div>
       <div className="productMenu" style={formStyle}>
-        <h2>Editar Usuarios</h2>
+        <h2>Todos los Usuarios</h2>
         <div className="updateProducts">
           <input
             placeholder="Buscar usuario"
@@ -109,31 +110,11 @@ const ShowFoundProducts = ({ users }) => {
 
   return (
     <div>
-      <ul
-        style={{
-          paddingInlineStart: 0,
-        }}
-      >
+      <ul className="productWrapper">
         {users ? (
           users.map((user) => {
             return (
-              <button
-                key={user.id}
-                style={{
-                  display: "flex",
-                  width: "80%",
-                  alignItems: "center",
-                  fontFamily: "verdana",
-                  border: "1px solid #555",
-                  padding: "2rem",
-                  margin: ".5rem auto",
-                  backgroundColor: "transparent",
-                  color: "#ddd",
-                  justifyContent: "space-between",
-                  fontSize: "16px",
-                  cursor: "default",
-                }}
-              >
+              <button key={user.id} className="userList">
                 <h6>{`Id: ${user.id}`}</h6>
                 <h5>{`Nombre: ${user.name}`}</h5>
                 <h6>{`Email: ${user.email}`}</h6>

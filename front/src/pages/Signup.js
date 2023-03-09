@@ -91,23 +91,7 @@ function Signup() {
 
   return (
     <div>
-      <div
-        id="signupForm"
-        className="signup-form"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          width: "30%",
-          margin: "2rem auto",
-          padding: "3rem",
-          borderRadius: "5px",
-          border: "1px solid #DDD",
-          boxShadow: "3px 3px 10px #333",
-          backgroundColor: "#111111EE",
-          backdropFilter: "blur(2px)",
-        }}
-      >
+      <div id="signupForm" className="signup-form">
         <h1
           style={{
             textAlign: "center",

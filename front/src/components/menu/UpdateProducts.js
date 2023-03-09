@@ -8,6 +8,7 @@ import {
 } from "../../redux/actions/actions";
 import { Box } from "@mui/system";
 import "../../style/modal.css";
+import "../../style/dashboard.css";
 
 export const UpdateProduct = () => {
   const dispatch = useDispatch();
@@ -123,45 +124,18 @@ const ShowFoundProducts = ({ products }) => {
 
   return (
     <div>
-      <ul
-        style={{
-          paddingInlineStart: 0,
-        }}
-      >
+      <ul className="productWrapper">
         {products ? (
           products.map((product) => {
             return (
               <button
                 key={product.id}
-                style={{
-                  display: "flex",
-                  width: "60%",
-                  alignItems: "center",
-                  fontFamily: "verdana",
-                  border: "1px solid #ddd",
-                  padding: "1rem",
-                  margin: ".5rem auto",
-                  backgroundColor: "transparent",
-                  color: "#ddd",
-                  justifyContent: "space-between",
-                }}
+                className="updateProductList"
                 onClick={() => setSelection(product)}
               >
                 <h6>{`Id: ${product.id}`}</h6>
-                <div
-                  style={{
-                    width: "100px",
-                    height: "auto",
-                    border: "1px solid #ddd",
-                  }}
-                >
-                  <img
-                    src={product.file}
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                    }}
-                  />
+                <div className="productListImage">
+                  <img src={product.file} />
                 </div>
                 <h5>{`${product.name}`}</h5>
                 <h6>{`Precio: $${product.price}`}</h6>
@@ -253,25 +227,10 @@ const UpdateForm = ({ product, setter }) => {
     description: product.description,
   });
 
-  const boxStyle = {
-    backgroundColor: "#111111ee",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "50%",
-    height: "90%",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 10,
-    display: "flex",
-    flexDirection: "column",
-  };
-
   return (
     <>
       <Modal open={product !== undefined}>
-        <Box style={boxStyle} className="modalBox">
+        <Box className="modalBox">
           <h1>Modificar Producto</h1>
           <label>Nombre del producto</label>
           <input name="name" value={input.name} onChange={handleChange} />

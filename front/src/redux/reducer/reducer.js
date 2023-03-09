@@ -108,6 +108,11 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         userVoucher: payload,
       };
+    case types.GET_ALL_VOUCHERS:
+      return {
+        ...state,
+        userVoucher: payload,
+      };
     default:
       return state;
   }
